@@ -14,14 +14,22 @@ android {
         testInstrumentationRunner testing.junitRunner
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "API_BASE", '"https://swapi.co/api/"'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_BASE", '"https://swapi.co/api/"'
         }
     }
 
     dynamicFeatures = [":characters"]
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -35,9 +43,22 @@ dependencies {
     //Android
     api androidDependencies.appCompat
 
+    //DI
+    api koinDep.core
+    api koinDep.android
+    api koinDep.viewmodel
+
     //Arch components
     api archComponents.components
     kapt archComponents.componentsCompiler
+
+    //Networking
+    api networking.okhttp
+    api networking.okhttpLog
+    api networking.gson
+    api networking.retrofit
+    api networking.retrofitRx
+    api networking.retrofitGson
 
     //UI
     api ui.constraintLayout

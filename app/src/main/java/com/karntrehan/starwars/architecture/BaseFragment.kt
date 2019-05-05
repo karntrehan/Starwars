@@ -10,28 +10,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import java.net.UnknownHostException
 
 
 abstract class BaseFragment : Fragment() {
 
-    private val vmFactory: ViewModelProvider.Factory by lazy { provideVMFactory() }
-
-    protected val vm: BaseVM by lazy { provideVM() }
-
-    abstract val vmClass: Class<out BaseVM>
-
     abstract val layout: Int
 
+    protected abstract val viewModel: BaseVM
+
     private lateinit var parentActivity: AppCompatActivity
-
-
-    abstract fun provideVMFactory(): ViewModelProvider.Factory
-
-    protected open fun provideVM() = ViewModelProviders.of(this, vmFactory).get(vmClass)
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,7 +36,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     private fun listenToLoadingState() {
-        vm.loading.observe(this, Observer { loading ->
+        viewModel.loading.observe(this, Observer { loading ->
             when (loading) {
                 true -> showLoading()
                 else -> hideLoading()
@@ -61,12 +50,12 @@ abstract class BaseFragment : Fragment() {
 
     @CallSuper
     private fun listenForExceptions() {
-        vm.error.observe(this, Observer { error ->
+        viewModel.error.observe(this, Observer { error ->
 
             if (error == null) return@Observer
 
             //Make sure error is not propagated to all subsequent fragments
-            vm.errorHandled()
+            viewModel.errorHandled()
 
             Log.e("BaseFragment", error.localizedMessage, error)
             when (error) {
