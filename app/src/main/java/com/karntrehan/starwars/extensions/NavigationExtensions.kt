@@ -1,4 +1,4 @@
-package com.karntrehan.starwars.utils
+package com.karntrehan.starwars.extensions
 
 import android.content.Intent
 

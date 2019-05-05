@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.compileSdk
@@ -29,14 +30,24 @@ dependencies {
     //Kotlin
     api kotlinDep.stdlib
     api kotlinDep.ktx
+    api kotlinDep.ktxFragment
 
     //Android
     api androidDependencies.appCompat
+
+    //Arch components
+    api archComponents.components
+    kapt archComponents.componentsCompiler
 
     //UI
     api ui.constraintLayout
     api ui.recyclerview
     api ui.material
+
+    //rx
+    api rx.java
+    api rx.android
+    api rx.kotlin
 
     //testing
     testImplementation testing.junit
