@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Star Wars</string>
+    <string name="title_characters">Star Wars - Characters</string>
+    <string name="title_activity_character">Characters</string>
+</resources>

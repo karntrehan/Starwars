@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.compileSdk
+    defaultConfig {
+        applicationId "com.karntrehan.starwars"
+        minSdkVersion rootProject.minSdk
+        targetSdkVersion rootProject.targetSdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner testing.junitRunner
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dynamicFeatures = [":characters"]
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Kotlin
+    api kotlinDep.stdlib
+    api kotlinDep.ktx
+
+    //Android
+    api androidDependencies.appCompat
+
+    //UI
+    api ui.constraintLayout
+    api ui.recyclerview
+    api ui.material
+
+    //testing
+    testImplementation testing.junit
+    testImplementation testing.mockitoKotlin
+    testImplementation testing.roboelectric
+    testImplementation testing.aacTesting
+}
