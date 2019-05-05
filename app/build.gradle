@@ -37,8 +37,6 @@ dependencies {
 
     //Kotlin
     api kotlinDep.stdlib
-    api kotlinDep.ktx
-    api kotlinDep.ktxFragment
 
     //Android
     api androidDependencies.appCompat

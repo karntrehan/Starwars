@@ -14,10 +14,10 @@ import io.reactivex.schedulers.Schedulers
 
 class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM() {
 
-    val _characters = MutableLiveData<List<CharacterSearchModel>>()
+    private val _characters = MutableLiveData<List<CharacterSearchModel>>()
     val characters: LiveData<List<CharacterSearchModel>> by lazy { _characters }
 
-    var nextPageUrl: String? = ""
+    private var nextPageUrl: String? = ""
     private var processing: Boolean = false
 
 

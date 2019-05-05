@@ -17,6 +17,11 @@ android {
     }
 }
 
+//For Parcelize support
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':app')

@@ -4,4 +4,5 @@
     <string name="enter_character_name">Enter Character Name</string>
     <string name="no_characters_found">No characters found!</string>
     <string name="show_all_characters">Show All Characters</string>
+    <string name="something_went_wrong">Something went wrong!</string>
 </resources>

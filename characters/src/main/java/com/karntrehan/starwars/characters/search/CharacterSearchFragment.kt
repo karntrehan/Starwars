@@ -1,5 +1,6 @@
 package com.karntrehan.starwars.characters.search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -37,14 +38,18 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
     //Pagination
     private lateinit var endlessScrollListener: EndlessScrollListener
 
+    //Navigator
+    private var navigator: CharacterNavigator? = null
+
     companion object {
         const val TAG = "CharacterSearchFragment"
         fun newInstance() = CharacterSearchFragment()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is CharacterNavigator)
+            navigator = context
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -95,7 +100,6 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
         searchListener
                 //To ensure queries are run when the user pauses typing
                 .debounce(300, TimeUnit.MILLISECONDS)
-                .distinct()
                 .subscribe {
                     //Reset the pagination state
                     endlessScrollListener.resetState()
@@ -154,6 +158,10 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
         srlCharacters.isRefreshing = true
     }
 
+    interface CharacterNavigator {
+        fun showCharacterDetails(character: CharacterSearchModel)
+    }
+
     override fun onResume() {
         super.onResume()
         rvCharacters.addOnScrollListener(endlessScrollListener)
@@ -161,7 +169,7 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
 
     //Adapter interactions
     override fun characterClicked(character: CharacterSearchModel) {
-        showToast("Clicked $character")
+        navigator?.showCharacterDetails(character)
     }
 
 }

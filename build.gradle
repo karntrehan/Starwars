@@ -15,9 +15,6 @@ buildscript {
         kotlinDep = [
                 gradlePlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}",
                 stdlib      : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
-                noArgsPlugin: "org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}",
-                ktx         : "androidx.core:core-ktx:1.0.1",
-                ktxFragment : "androidx.fragment:fragment-ktx:1.0.0",
         ]
 
         androidDependencies = [
