@@ -1,3 +1,7 @@
 <resources>
     <string name="action_settings">Settings</string>
+    <string name="search">Search</string>
+    <string name="enter_character_name">Enter Character Name</string>
+    <string name="no_characters_found">No characters found!</string>
+    <string name="show_all_characters">Show All Characters</string>
 </resources>

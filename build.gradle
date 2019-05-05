@@ -50,6 +50,8 @@ buildscript {
                 retrofit    : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
                 retrofitRx  : "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
                 retrofitGson: "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+                /*https://github.com/JodaOrg/joda-time/releases*/
+                'jodaTime'  : "joda-time:joda-time:2.10.1",
         ]
 
         rx = [
@@ -65,12 +67,6 @@ buildscript {
                 material        : 'com.google.android.material:material:1.0.0',
                 /*https://github.com/square/picasso#download*/
                 picasso         : "com.squareup.picasso:picasso:2.71828",
-        ]
-
-        roomVersion = '2.0.0'
-        db = [
-                room   : "androidx.room:room-runtime:${roomVersion}",
-                roomAno: "androidx.room:room-compiler:${roomVersion}",
         ]
 
         other = [

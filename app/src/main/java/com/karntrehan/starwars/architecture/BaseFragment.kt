@@ -2,7 +2,10 @@ package com.karntrehan.starwars.architecture
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
@@ -20,7 +23,7 @@ abstract class BaseFragment : Fragment() {
 
     protected abstract val viewModel: BaseVM
 
-    private lateinit var parentActivity: AppCompatActivity
+    protected lateinit var parentActivity: AppCompatActivity
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -97,11 +100,6 @@ abstract class BaseFragment : Fragment() {
     protected fun setUpToolbar(toolbar: Toolbar) {
         parentActivity.setSupportActionBar(toolbar)
         parentActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

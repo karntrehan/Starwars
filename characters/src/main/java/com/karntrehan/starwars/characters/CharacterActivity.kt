@@ -38,6 +38,7 @@ class CharacterActivity : AppCompatActivity() {
         viewModel { CharacterSearchVM(get()) }
         single { characterSearchContact(get()) }
     }
+
     private fun characterSearchContact(service: CharacterService)
             : CharacterSearchContract.Repo = CharacterSearchRepo(service)
 
@@ -46,5 +47,6 @@ class CharacterActivity : AppCompatActivity() {
     private fun characterModule(): Module = module {
         single { characterService(get()) }
     }
+
     private fun characterService(retrofit: Retrofit): CharacterService = retrofit.create()
 }

@@ -59,6 +59,7 @@ dependencies {
     api networking.retrofit
     api networking.retrofitRx
     api networking.retrofitGson
+    api networking.jodaTime
 
     //UI
     api ui.constraintLayout
