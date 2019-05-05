@@ -3,23 +3,22 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.karntrehan.starwars.characters">
 
+    <!--allow users to experience that feature without installation
+        feature is available when a user first downloads and installs the app-->
     <dist:module
         dist:instant="false"
         dist:onDemand="false"
         dist:title="@string/title_characters">
-        <dist:fusing dist:include="false" />
+        <dist:fusing dist:include="true" />
     </dist:module>
 
     <application>
+
         <activity
             android:name=".CharacterActivity"
             android:label="@string/title_activity_character"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>
