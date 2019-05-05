@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".details.CharacterDetailsFragment">
+    android:orientation="vertical">
 
     <include layout="@layout/actionbar_toolbar" />
 
@@ -15,13 +15,162 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/tvNameLabel"
+                    style="@style/TextAppearance.AppCompat.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/tvName"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvNameLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvNameLabel"
+                    tools:text="Luke Sjywalker" />
+
+                <TextView
+                    android:id="@+id/tvYOBLabel"
+                    style="@style/TextAppearance.AppCompat.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/year_of_birth"
+                    app:layout_constraintStart_toStartOf="@id/tvNameLabel"
+                    app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+                <TextView
+                    android:id="@+id/tvYOB"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvYOBLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvYOBLabel"
+                    tools:text="19 BBY" />
+
+                <TextView
+                    android:id="@+id/tvHeightLabel"
+                    style="@style/TextAppearance.AppCompat.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/height"
+                    app:layout_constraintStart_toStartOf="@id/tvNameLabel"
+                    app:layout_constraintTop_toBottomOf="@id/tvYOB" />
+
+                <TextView
+                    android:id="@+id/tvHeight"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvHeightLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvHeightLabel"
+                    tools:text="172 cms" />
+
+                <TextView
+                    android:id="@+id/tvHeightFeet"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvHeightLabel"
+                    app:layout_constraintTop_toBottomOf="@id/tvHeight"
+                    tools:text="5 ft 64 inches" />
+
+
+                <TextView
+                    android:id="@+id/tvSpeciesLabel"
+                    style="@style/TextAppearance.AppCompat.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/species"
+                    app:layout_constraintStart_toStartOf="@id/tvNameLabel"
+                    app:layout_constraintTop_toBottomOf="@id/tvHeightFeet" />
+
+                <LinearLayout
+                    android:id="@+id/llSpeciesAndLanguage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvSpeciesLabel"
+                    app:layout_constraintTop_toTopOf="@+id/tvSpeciesLabel"
+                    tools:background="@color/colorPrimary"
+                    tools:layout_height="30dp" />
+
+                <TextView
+                    android:id="@+id/tvHomeworldLabel"
+                    style="@style/TextAppearance.AppCompat.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/homeworld"
+                    app:layout_constraintStart_toStartOf="@id/tvNameLabel"
+                    app:layout_constraintTop_toBottomOf="@id/llSpeciesAndLanguage" />
+
+                <LinearLayout
+                    android:id="@+id/llHomeworldPopulation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvHomeworldLabel"
+                    app:layout_constraintTop_toTopOf="@+id/tvHomeworldLabel"
+                    tools:background="@color/colorPrimaryDark"
+                    tools:layout_height="30dp" />
+
+
+                <TextView
+                    android:id="@+id/tvFilmsLabel"
+                    style="@style/TextAppearance.AppCompat.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/films"
+                    app:layout_constraintStart_toStartOf="@id/tvNameLabel"
+                    app:layout_constraintTop_toBottomOf="@id/llHomeworldPopulation" />
+
+                <LinearLayout
+                    android:id="@+id/llFilms"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/llFilms"
+                    app:layout_constraintTop_toTopOf="@+id/tvFilmsLabel"
+                    tools:background="@color/colorAccent"
+                    tools:layout_height="30dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.karntrehan.starwars.architecture.BaseVM
 import com.karntrehan.starwars.architecture.RemoteResponse
-import com.karntrehan.starwars.characters.search.models.CharacterResponseModel
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
 import com.karntrehan.starwars.extensions.hide
 import com.karntrehan.starwars.extensions.show
@@ -42,16 +41,13 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
         handleCharactersObs(repo.characters(url), resetItems)
     }
 
-    private fun handleCharactersObs(charactersObs: Single<RemoteResponse<List<CharacterResponseModel>>>, resetItems: Boolean) {
+    private fun handleCharactersObs(charactersObs: Single<RemoteResponse<List<CharacterSearchModel>>>, resetItems: Boolean) {
         charactersObs
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
                 .map { response ->
                     nextPageUrl = response.next
                     return@map response.results
-                }
-                .map { characters ->
-                    characters.map { CharacterSearchModel(it.url, it.name, it.birthYear) }
                 }
                 .map { searchModels ->
                     appendOrSetResults(resetItems, _characters.value, searchModels)

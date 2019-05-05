@@ -5,4 +5,10 @@
     <string name="no_characters_found">No characters found!</string>
     <string name="show_all_characters">Show All Characters</string>
     <string name="something_went_wrong">Something went wrong!</string>
+    <string name="name">Name:</string>
+    <string name="year_of_birth">Year of Birth:</string>
+    <string name="height">Height:</string>
+    <string name="species">Species:</string>
+    <string name="homeworld">Homeworld:</string>
+    <string name="films">Films:</string>
 </resources>

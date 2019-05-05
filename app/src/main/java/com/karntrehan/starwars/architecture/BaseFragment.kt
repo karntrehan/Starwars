@@ -114,11 +114,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            android.R.id.home -> {
-                if (parentActivity.supportFragmentManager.backStackEntryCount > 1)
-                    popBack()
-                else parentActivity.finish()
-            }
+            android.R.id.home -> parentActivity.onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }

@@ -48,6 +48,13 @@ class CharacterDetailsFragment : BaseFragment() {
 
         srlDetails.isEnabled = false
 
+        tvName.text = selectedCharacter?.name
+        tvYOB.text = selectedCharacter?.birthYear
+
+        selectedCharacter?.url?.run {
+            viewModel.getCharacterDetails(this)
+        }
+
     }
 
     override fun hideLoading() {
