@@ -14,4 +14,7 @@
     <string name="speak">speak %s</string>
     <string name="live_in">live in %s</string>
     <string name="population">with population %s</string>
+    <string name="released_on">released on %s</string>
+    <string name="cms">%s cms</string>
+    <string name="feet_inches">%s ft %s inches</string>
 </resources>

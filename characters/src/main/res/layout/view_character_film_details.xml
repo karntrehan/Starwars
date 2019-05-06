@@ -3,35 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvSpeciesName"
+        android:id="@+id/tvFilmName"
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Wookie" />
+        tools:text="A New Hope" />
 
     <TextView
-        android:id="@+id/tvSpeciesLanguage"
+        android:id="@+id/tvFilmReleaseDate"
         style="@style/TextAppearance.AppCompat.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="speak Shyriiwook" />
+        tools:text="released on 1977-05-25" />
 
     <TextView
-        android:id="@+id/tvHomeworld"
+        android:id="@+id/tvFilmCrawl"
         style="@style/TextAppearance.AppCompat.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="live in Tatooine" />
+        android:layout_marginTop="2dp"
+        android:fontFamily="monospace"
+        tools:text="It is a period of civil war.\n\nRebel spaceships.\n\n\n\nDuring the battle, Empire's\n\nultimate, the DEATH\n\nSTAR, with enough power\n\nto destroy an entire planet freedom to the galaxy...." />
 
-    <TextView
-        android:id="@+id/tvPopulation"
-        style="@style/TextAppearance.AppCompat.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="with population 120,000" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_color"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"/>
 
 </LinearLayout>

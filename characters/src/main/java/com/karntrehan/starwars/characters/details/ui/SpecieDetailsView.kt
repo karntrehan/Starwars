@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.view_character_species_details.view.*
 class SpecieDetailsView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+        defStyleAttr: Int = 0)
+    : LinearLayout(context, attrs, defStyleAttr) {
 
     init {
         LayoutInflater
@@ -20,7 +20,7 @@ class SpecieDetailsView @JvmOverloads constructor(
                 .inflate(R.layout.view_character_species_details, this, true)
     }
 
-    fun setSpecieAndLanguage(details: CharacterDetailsModel.SpeciesDetails) {
+    fun specieDetails(details: CharacterDetailsModel.SpeciesDetails) {
         tvSpeciesName.text = details.species
         tvSpeciesLanguage.text = String.format(context.getString(R.string.speak), details.language)
         tvHomeworld.text = String.format(context.getString(R.string.live_in), details.homeworld)

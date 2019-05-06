@@ -7,8 +7,10 @@ import androidx.lifecycle.Observer
 import com.karntrehan.starwars.architecture.BaseFragment
 import com.karntrehan.starwars.characters.R
 import com.karntrehan.starwars.characters.details.models.CharacterDetailsModel
+import com.karntrehan.starwars.characters.details.ui.FilmDetailsView
 import com.karntrehan.starwars.characters.details.ui.SpecieDetailsView
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
+import com.karntrehan.starwars.extensions.isValid
 import com.karntrehan.starwars.extensions.visible
 import kotlinx.android.synthetic.main.actionbar_toolbar.*
 import kotlinx.android.synthetic.main.fragment_character_details.*
@@ -73,11 +75,12 @@ class CharacterDetailsFragment : BaseFragment() {
         if (details.heightCentimeters.isValid()) {
             tvHeightLabel.visible()
             tvHeight.visible()
-            tvHeight.text = details.heightCentimeters
+            tvHeight.text = String.format(getString(R.string.cms), details.heightCentimeters)
         }
-        if (details.heightFt.isValid()) {
+        if (details.heightFt.isValid() && details.heightInches.isValid()) {
             tvHeightFeet.visible()
-            tvHeightFeet.text = details.heightFt
+            tvHeightFeet.text =
+                    String.format(getString(R.string.feet_inches), details.heightFt, details.heightInches)
         }
 
         details.specieDetails?.run {
@@ -85,11 +88,20 @@ class CharacterDetailsFragment : BaseFragment() {
             llSpeciesDetails.visible()
             forEach {
                 val specieLanguageView = SpecieDetailsView(parentActivity)
-                specieLanguageView.setSpecieAndLanguage(it)
+                specieLanguageView.specieDetails(it)
                 llSpeciesDetails.addView(specieLanguageView)
             }
         }
 
+        details.filmDetails?.run {
+            tvFilmsLabel.visible()
+            llFilms.visible()
+            forEach {
+                val filmDetailsView = FilmDetailsView(parentActivity)
+                filmDetailsView.filmDetails(it)
+                llFilms.addView(filmDetailsView)
+            }
+        }
     }
 
     override fun hideLoading() {
@@ -99,9 +111,4 @@ class CharacterDetailsFragment : BaseFragment() {
     override fun showLoading() {
         srlDetails.isRefreshing = true
     }
-
-    fun String?.isValid(): Boolean {
-        return !this.isNullOrEmpty()
-    }
-
 }

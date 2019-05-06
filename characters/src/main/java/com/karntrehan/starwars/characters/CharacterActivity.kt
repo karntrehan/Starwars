@@ -30,6 +30,12 @@ class CharacterActivity : AppCompatActivity(), CharacterSearchFragment.Character
         navigateTo(CharacterSearchFragment.newInstance(), CharacterSearchFragment.TAG)
     }
 
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 1)
+            super.onBackPressed()
+        else finish()
+    }
+
     override fun showCharacterDetails(character: CharacterSearchModel) {
         navigateTo(CharacterDetailsFragment.newInstance(character), CharacterDetailsFragment.TAG)
     }
