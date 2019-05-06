@@ -3,9 +3,13 @@ package com.karntrehan.starwars.characters.details
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.karntrehan.starwars.architecture.BaseFragment
 import com.karntrehan.starwars.characters.R
+import com.karntrehan.starwars.characters.details.models.CharacterDetailsModel
+import com.karntrehan.starwars.characters.details.ui.SpecieDetailsView
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
+import com.karntrehan.starwars.extensions.visible
 import kotlinx.android.synthetic.main.actionbar_toolbar.*
 import kotlinx.android.synthetic.main.fragment_character_details.*
 import org.koin.android.ext.android.inject
@@ -53,6 +57,37 @@ class CharacterDetailsFragment : BaseFragment() {
 
         selectedCharacter?.url?.run {
             viewModel.getCharacterDetails(this)
+                    .observe(this@CharacterDetailsFragment, Observer { details ->
+                        handleCharacterDetails(details)
+                    })
+        }
+
+    }
+
+    private fun handleCharacterDetails(details: CharacterDetailsModel) {
+
+        tvName.text = details.name
+
+        tvYOB.text = details.birthYear
+
+        if (details.heightCentimeters.isValid()) {
+            tvHeightLabel.visible()
+            tvHeight.visible()
+            tvHeight.text = details.heightCentimeters
+        }
+        if (details.heightFt.isValid()) {
+            tvHeightFeet.visible()
+            tvHeightFeet.text = details.heightFt
+        }
+
+        details.specieDetails?.run {
+            tvSpeciesLabel.visible()
+            llSpeciesDetails.visible()
+            forEach {
+                val specieLanguageView = SpecieDetailsView(parentActivity)
+                specieLanguageView.setSpecieAndLanguage(it)
+                llSpeciesDetails.addView(specieLanguageView)
+            }
         }
 
     }
@@ -65,5 +100,8 @@ class CharacterDetailsFragment : BaseFragment() {
         srlDetails.isRefreshing = true
     }
 
+    fun String?.isValid(): Boolean {
+        return !this.isNullOrEmpty()
+    }
 
 }

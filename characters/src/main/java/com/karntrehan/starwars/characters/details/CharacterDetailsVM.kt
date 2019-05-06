@@ -19,8 +19,20 @@ class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : Base
             repo.getCharacterDetails(url)
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.computation())
+                    .map {
+                        val list = listOf(
+                                CharacterDetailsModel.SpeciesDetails(
+                                        "Human", "Galactic Basic",
+                                        "Tatooine", "200000"),
+                                CharacterDetailsModel.SpeciesDetails("Hutt", "Huttese",
+                                        "Alderaan", "2000000000"),
+                                CharacterDetailsModel.SpeciesDetails("Wookie", "Shyriiwook", "Bespin", "60707070")
+                        )
+                        it.copy(specieDetails = list)
+                    }
                     .subscribe({
                         Log.d(TAG, it.toString())
+                        characterDetails.postValue(it)
                     }, { handleError(it) })
                     .addTo(disposable)
         }

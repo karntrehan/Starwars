@@ -74,8 +74,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/height"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@id/tvNameLabel"
-                    app:layout_constraintTop_toBottomOf="@id/tvYOB" />
+                    app:layout_constraintTop_toBottomOf="@id/tvYOB"
+                    tools:visibility="visible" />
 
                 <TextView
                     android:id="@+id/tvHeight"
@@ -84,10 +86,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/tvHeightLabel"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tvHeightLabel"
-                    tools:text="172 cms" />
+                    tools:text="172 cms"
+                    tools:visibility="visible" />
 
                 <TextView
                     android:id="@+id/tvHeightFeet"
@@ -96,10 +100,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tvHeightLabel"
                     app:layout_constraintTop_toBottomOf="@id/tvHeight"
-                    tools:text="5 ft 64 inches" />
+                    tools:text="5 ft 64 inches"
+                    tools:visibility="visible" />
 
 
                 <TextView
@@ -109,45 +115,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/species"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@id/tvNameLabel"
-                    app:layout_constraintTop_toBottomOf="@id/tvHeightFeet" />
+                    app:layout_constraintTop_toBottomOf="@id/tvHeightFeet"
+                    tools:visibility="visible" />
 
                 <LinearLayout
-                    android:id="@+id/llSpeciesAndLanguage"
+                    android:id="@+id/llSpeciesDetails"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tvSpeciesLabel"
                     app:layout_constraintTop_toTopOf="@+id/tvSpeciesLabel"
                     tools:background="@color/colorPrimary"
-                    tools:layout_height="30dp" />
-
-                <TextView
-                    android:id="@+id/tvHomeworldLabel"
-                    style="@style/TextAppearance.AppCompat.Large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/homeworld"
-                    app:layout_constraintStart_toStartOf="@id/tvNameLabel"
-                    app:layout_constraintTop_toBottomOf="@id/llSpeciesAndLanguage" />
-
-                <LinearLayout
-                    android:id="@+id/llHomeworldPopulation"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/tvHomeworldLabel"
-                    app:layout_constraintTop_toTopOf="@+id/tvHomeworldLabel"
-                    tools:background="@color/colorPrimaryDark"
-                    tools:layout_height="30dp" />
-
+                    tools:layout_height="30dp"
+                    tools:visibility="visible" />
 
                 <TextView
                     android:id="@+id/tvFilmsLabel"
@@ -156,8 +142,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/films"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@id/tvNameLabel"
-                    app:layout_constraintTop_toBottomOf="@id/llHomeworldPopulation" />
+                    app:layout_constraintTop_toBottomOf="@id/llSpeciesDetails"
+                    tools:visibility="visible" />
 
                 <LinearLayout
                     android:id="@+id/llFilms"
@@ -166,11 +154,13 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/llFilms"
+                    app:layout_constraintStart_toEndOf="@id/tvFilmsLabel"
                     app:layout_constraintTop_toTopOf="@+id/tvFilmsLabel"
                     tools:background="@color/colorAccent"
-                    tools:layout_height="30dp" />
+                    tools:layout_height="30dp"
+                    tools:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

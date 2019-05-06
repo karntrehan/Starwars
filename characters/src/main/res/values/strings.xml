@@ -11,4 +11,7 @@
     <string name="species">Species:</string>
     <string name="homeworld">Homeworld:</string>
     <string name="films">Films:</string>
+    <string name="speak">speak %s</string>
+    <string name="live_in">live in %s</string>
+    <string name="population">with population %s</string>
 </resources>

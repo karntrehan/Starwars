@@ -18,13 +18,16 @@ data class CharacterDetailsModel(
         @SerializedName("name") val name: String?,
         @SerializedName("birth_year") val birthYear: String?,
         @SerializedName("height") val heightCentimeters: String?,
-        @Exclude val heightFt: Float?,
+        @Exclude val heightFt: String?,
 
         @SerializedName("species") val species: List<String>?,
-        @Exclude val specieDetails: Pair<Specie, SpecieLanguage>?,
-
-        @Exclude val homeworldDetails: Pair<Homeworld, HomeworldPopulation>?,
+        @Exclude val specieDetails: List<SpeciesDetails>?,
 
         @SerializedName("films") val films: List<String>?,
-        @Exclude val filmDetails: Triple<Title, ReleaseDate, OpeningCrawl>
-)
+        @Exclude val filmDetails: Triple<Title, ReleaseDate, OpeningCrawl>?
+) {
+    class SpeciesDetails(val species: String,
+                         val language: String,
+                         val homeworld: String,
+                         val population: String)
+}
