@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.karntrehan.starwars.characters.R
-import com.karntrehan.starwars.characters.details.models.CharacterDetailsModel
+import com.karntrehan.starwars.characters.details.models.FilmDetailsModel
 import kotlinx.android.synthetic.main.view_character_film_details.view.*
 
 class FilmDetailsView @JvmOverloads constructor(
@@ -20,7 +20,7 @@ class FilmDetailsView @JvmOverloads constructor(
                 .inflate(R.layout.view_character_film_details, this, true)
     }
 
-    fun filmDetails(details: CharacterDetailsModel.FilmDetailsModel) {
+    fun filmDetails(details: FilmDetailsModel) {
         tvFilmName.text = details.title
         tvFilmReleaseDate.text = String.format(context.getString(R.string.released_on), details.releaseDate)
         tvFilmCrawl.text = details.openingCrawl

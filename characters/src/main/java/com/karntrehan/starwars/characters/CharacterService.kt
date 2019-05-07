@@ -2,9 +2,9 @@ package com.karntrehan.starwars.characters
 
 import com.karntrehan.starwars.architecture.RemoteResponse
 import com.karntrehan.starwars.characters.details.models.CharacterDetailsModel
-import com.karntrehan.starwars.characters.details.models.FilmResponseModel
-import com.karntrehan.starwars.characters.details.models.HomeworldResponseModel
-import com.karntrehan.starwars.characters.details.models.SpeciesResponseModel
+import com.karntrehan.starwars.characters.details.models.response.FilmResponseModel
+import com.karntrehan.starwars.characters.details.models.response.HomeworldResponseModel
+import com.karntrehan.starwars.characters.details.models.response.SpeciesResponseModel
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
 import io.reactivex.Single
 import retrofit2.http.GET

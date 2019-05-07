@@ -32,6 +32,8 @@ class CharacterActivity : AppCompatActivity(), CharacterSearchFragment.Character
     }
 
     private fun navigateTo(fragment: Fragment, tag: String) {
+        if (supportFragmentManager.findFragmentByTag(tag) != null) return
+
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.flContainer, fragment, tag)

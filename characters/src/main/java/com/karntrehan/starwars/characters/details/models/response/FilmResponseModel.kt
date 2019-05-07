@@ -1,4 +1,4 @@
-package com.karntrehan.starwars.characters.details.models
+package com.karntrehan.starwars.characters.details.models.response
 
 import com.google.gson.annotations.SerializedName
 

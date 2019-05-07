@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.karntrehan.starwars.characters.R
-import com.karntrehan.starwars.characters.details.models.CharacterDetailsModel
+import com.karntrehan.starwars.characters.details.models.SpeciesDetailsModel
 import kotlinx.android.synthetic.main.view_character_species_details.view.*
 
 class SpecieDetailsView @JvmOverloads constructor(
@@ -20,7 +20,7 @@ class SpecieDetailsView @JvmOverloads constructor(
                 .inflate(R.layout.view_character_species_details, this, true)
     }
 
-    fun specieDetails(detailsModel: CharacterDetailsModel.SpeciesDetailsModel) {
+    fun specieDetails(detailsModel: SpeciesDetailsModel) {
         tvSpeciesName.text = detailsModel.species
         tvSpeciesLanguage.text = String.format(context.getString(R.string.speak), detailsModel.language)
         tvHomeworld.text = String.format(context.getString(R.string.live_in), detailsModel.homeworld)

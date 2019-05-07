@@ -16,12 +16,7 @@ data class CharacterDetailsModel(
         @SerializedName("films") val filmUrls: List<String>,
         @Exclude val filmDetails: List<FilmDetailsModel>?
 ) {
-    class SpeciesDetailsModel(val species: String,
-                              val language: String,
-                              val homeworld: String,
-                              val population: String)
 
-    class FilmDetailsModel(val title: String,
-                           val releaseDate: String,
-                           val openingCrawl: String)
+
+
 }

@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.karntrehan.starwars.architecture.BaseVM
 import com.karntrehan.starwars.characters.details.models.CharacterDetailsModel
+import com.karntrehan.starwars.characters.details.models.FilmDetailsModel
+import com.karntrehan.starwars.characters.details.models.SpeciesDetailsModel
 import com.karntrehan.starwars.extensions.divide
 import com.karntrehan.starwars.extensions.hide
 import com.karntrehan.starwars.extensions.show
@@ -18,7 +20,7 @@ class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : Base
     private var specieName: String = ""
     private var specieLanguage: String = ""
 
-    private val specieDetails = mutableListOf<CharacterDetailsModel.SpeciesDetailsModel>()
+    private val specieDetails = mutableListOf<SpeciesDetailsModel>()
 
     fun getCharacterDetails(url: String): LiveData<CharacterDetailsModel> {
         if (characterDetails.value == null) {
@@ -42,12 +44,8 @@ class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : Base
                     }
                     .observeOn(Schedulers.computation())
                     .map { homeworldResponse ->
-                        specieDetails.add(
-                                CharacterDetailsModel.SpeciesDetailsModel(
-                                        specieName,
-                                        specieLanguage,
-                                        homeworldResponse.name,
-                                        homeworldResponse.population)
+                        specieDetails.add(SpeciesDetailsModel(specieName, specieLanguage,
+                                homeworldResponse.name, homeworldResponse.population)
                         )
                     }
                     .toList()
@@ -64,14 +62,9 @@ class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : Base
                     .observeOn(Schedulers.computation())
                     .map { filmsResponse ->
                         val currentValue = characterDetails.value
-                        val films = mutableListOf<CharacterDetailsModel.FilmDetailsModel>()
+                        val films = mutableListOf<FilmDetailsModel>()
                         filmsResponse.forEach { film ->
-                            films.add(
-                                    CharacterDetailsModel.FilmDetailsModel(
-                                            film.title,
-                                            film.releaseDate,
-                                            film.openingCrawl)
-                            )
+                            films.add(FilmDetailsModel(film.title, film.releaseDate, film.openingCrawl))
                         }
                         return@map currentValue?.copy(filmDetails = films)
                     }
