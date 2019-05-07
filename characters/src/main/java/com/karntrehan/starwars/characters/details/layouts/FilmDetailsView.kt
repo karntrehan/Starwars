@@ -1,13 +1,11 @@
-package com.karntrehan.starwars.characters.details.ui
+package com.karntrehan.starwars.characters.details.layouts
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.karntrehan.starwars.characters.R
-import com.karntrehan.starwars.characters.details.models.OpeningCrawl
-import com.karntrehan.starwars.characters.details.models.ReleaseDate
-import com.karntrehan.starwars.characters.details.models.Title
+import com.karntrehan.starwars.characters.details.models.CharacterDetailsModel
 import kotlinx.android.synthetic.main.view_character_film_details.view.*
 
 class FilmDetailsView @JvmOverloads constructor(
@@ -22,10 +20,10 @@ class FilmDetailsView @JvmOverloads constructor(
                 .inflate(R.layout.view_character_film_details, this, true)
     }
 
-    fun filmDetails(details: Triple<Title, ReleaseDate, OpeningCrawl>) {
-        tvFilmName.text = details.first
-        tvFilmReleaseDate.text = String.format(context.getString(R.string.released_on), details.second)
-        tvFilmCrawl.text = details.third
+    fun filmDetails(details: CharacterDetailsModel.FilmDetailsModel) {
+        tvFilmName.text = details.title
+        tvFilmReleaseDate.text = String.format(context.getString(R.string.released_on), details.releaseDate)
+        tvFilmCrawl.text = details.openingCrawl
     }
 
 }

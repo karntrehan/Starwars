@@ -2,9 +2,9 @@ package com.karntrehan.starwars.characters
 
 import com.karntrehan.starwars.architecture.RemoteResponse
 import com.karntrehan.starwars.characters.details.models.CharacterDetailsModel
-import com.karntrehan.starwars.characters.details.models.CharacterFilmModel
-import com.karntrehan.starwars.characters.details.models.CharacterHomeworldModel
-import com.karntrehan.starwars.characters.details.models.CharacterSpeciesModel
+import com.karntrehan.starwars.characters.details.models.FilmResponseModel
+import com.karntrehan.starwars.characters.details.models.HomeworldResponseModel
+import com.karntrehan.starwars.characters.details.models.SpeciesResponseModel
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -23,12 +23,12 @@ interface CharacterService {
     fun getCharacterDetails(@Url url: String): Single<CharacterDetailsModel>
 
     @GET
-    fun getCharacterSpecies(@Url url: String): Single<CharacterSpeciesModel>
+    fun getCharacterSpecies(@Url url: String): Single<SpeciesResponseModel>
 
     @GET
-    fun getCharacterHomeworld(@Url url: String): Single<CharacterHomeworldModel>
+    fun getCharacterHomeworld(@Url url: String): Single<HomeworldResponseModel>
 
     @GET
-    fun getCharacterFilms(@Url url: String): Single<CharacterFilmModel>
+    fun getCharacterFilms(@Url url: String): Single<FilmResponseModel>
 
 }

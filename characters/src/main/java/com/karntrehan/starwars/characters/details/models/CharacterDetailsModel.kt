@@ -3,32 +3,25 @@ package com.karntrehan.starwars.characters.details.models
 import com.google.gson.annotations.SerializedName
 import com.karntrehan.starwars.dependencies.Exclude
 
-typealias Specie = String
-typealias SpecieLanguage = String
-
-typealias Homeworld = String
-typealias HomeworldPopulation = String
-
-typealias Title = String?
-typealias ReleaseDate = String?
-typealias OpeningCrawl = String?
-
 data class CharacterDetailsModel(
-        @SerializedName("url") val url: String?,
-        @SerializedName("name") val name: String?,
-        @SerializedName("birth_year") val birthYear: String?,
-        @SerializedName("height") val heightCentimeters: String?,
-        @Exclude val heightFt: String?,
-        @Exclude val heightInches: String?,
+        @SerializedName("url") val url: String,
+        @SerializedName("name") val name: String,
+        @SerializedName("birth_year") val birthYear: String,
+        @SerializedName("height") val heightCentimeters: String,
+        @Exclude val heightFtInches: Pair<String, String>?,
 
-        @SerializedName("species") val species: List<String>?,
-        @Exclude val specieDetails: List<SpeciesDetails>?,
+        @SerializedName("species") val speciesUrl: List<String>,
+        @Exclude val specieDetails: List<SpeciesDetailsModel>?,
 
-        @SerializedName("films") val films: List<String>?,
-        @Exclude val filmDetails: List<Triple<Title, ReleaseDate, OpeningCrawl>>?
+        @SerializedName("films") val filmUrls: List<String>,
+        @Exclude val filmDetails: List<FilmDetailsModel>?
 ) {
-    class SpeciesDetails(val species: String,
-                         val language: String,
-                         val homeworld: String,
-                         val population: String)
+    class SpeciesDetailsModel(val species: String,
+                              val language: String,
+                              val homeworld: String,
+                              val population: String)
+
+    class FilmDetailsModel(val title: String,
+                           val releaseDate: String,
+                           val openingCrawl: String)
 }

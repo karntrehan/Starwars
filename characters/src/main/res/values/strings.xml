@@ -16,5 +16,5 @@
     <string name="population">with population %s</string>
     <string name="released_on">released on %s</string>
     <string name="cms">%s cms</string>
-    <string name="feet_inches">%s ft %s inches</string>
+    <string name="feet_inches">%s ft  or %s inches</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.karntrehan.starwars.characters.details.ui
+package com.karntrehan.starwars.characters.details.layouts
 
 import android.content.Context
 import android.util.AttributeSet
@@ -20,11 +20,11 @@ class SpecieDetailsView @JvmOverloads constructor(
                 .inflate(R.layout.view_character_species_details, this, true)
     }
 
-    fun specieDetails(details: CharacterDetailsModel.SpeciesDetails) {
-        tvSpeciesName.text = details.species
-        tvSpeciesLanguage.text = String.format(context.getString(R.string.speak), details.language)
-        tvHomeworld.text = String.format(context.getString(R.string.live_in), details.homeworld)
-        tvPopulation.text = String.format(context.getString(R.string.population), details.population)
+    fun specieDetails(detailsModel: CharacterDetailsModel.SpeciesDetailsModel) {
+        tvSpeciesName.text = detailsModel.species
+        tvSpeciesLanguage.text = String.format(context.getString(R.string.speak), detailsModel.language)
+        tvHomeworld.text = String.format(context.getString(R.string.live_in), detailsModel.homeworld)
+        tvPopulation.text = String.format(context.getString(R.string.population), detailsModel.population)
     }
 
 }

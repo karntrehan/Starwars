@@ -6,9 +6,9 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.karntrehan.starwars.architecture.BaseFragment
 import com.karntrehan.starwars.characters.R
+import com.karntrehan.starwars.characters.details.layouts.FilmDetailsView
+import com.karntrehan.starwars.characters.details.layouts.SpecieDetailsView
 import com.karntrehan.starwars.characters.details.models.CharacterDetailsModel
-import com.karntrehan.starwars.characters.details.ui.FilmDetailsView
-import com.karntrehan.starwars.characters.details.ui.SpecieDetailsView
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
 import com.karntrehan.starwars.extensions.isValid
 import com.karntrehan.starwars.extensions.visible
@@ -77,15 +77,17 @@ class CharacterDetailsFragment : BaseFragment() {
             tvHeight.visible()
             tvHeight.text = String.format(getString(R.string.cms), details.heightCentimeters)
         }
-        if (details.heightFt.isValid() && details.heightInches.isValid()) {
+
+        if (details.heightFtInches != null) {
             tvHeightFeet.visible()
-            tvHeightFeet.text =
-                    String.format(getString(R.string.feet_inches), details.heightFt, details.heightInches)
+            tvHeightFeet.text = String.format(getString(R.string.feet_inches),
+                    details.heightFtInches.first, details.heightFtInches.second)
         }
 
         details.specieDetails?.run {
             tvSpeciesLabel.visible()
             llSpeciesDetails.visible()
+            llSpeciesDetails.removeAllViews()
             forEach {
                 val specieLanguageView = SpecieDetailsView(parentActivity)
                 specieLanguageView.specieDetails(it)

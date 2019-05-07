@@ -12,14 +12,6 @@ fun View.gone() {
     this.visibility = View.GONE
 }
 
-fun View.invisible() {
-    this.visibility = View.INVISIBLE
-}
-
-fun String?.isValid(): Boolean {
-    return !this.isNullOrEmpty()
-}
-
 @Suppress("DEPRECATION")
 fun TextView.html(html: String?) {
     if (!html.isValid()) return
