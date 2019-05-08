@@ -25,4 +25,10 @@ androidExtensions {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':app')
+
+    //testing
+    testImplementation testing.junit
+    testImplementation testing.mockitoKotlin
+    testImplementation testing.roboelectric
+    testImplementation testing.aacTesting
 }
