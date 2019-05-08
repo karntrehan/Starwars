@@ -155,8 +155,9 @@ class CharacterDetailsVMTest {
         verify(errorObs, never()).onChanged(any())
 
         pm("We fire API calls properly based on the character details " +
-                "& When all details for species, planets and films are " +
-                "successfully returned by the server, we push the same correctly to the UI.")
+                "& when some of details for species, planets and films are " +
+                "successfully returned by the server, we continue the stream " +
+                "& we push the same correctly to the UI.")
     }
 
     //region region: Utils
