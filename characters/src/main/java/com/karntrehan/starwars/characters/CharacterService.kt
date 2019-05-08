@@ -23,12 +23,12 @@ interface CharacterService {
     fun getCharacterDetails(@Url url: String): Single<CharacterDetailsModel>
 
     @GET
-    fun getCharacterSpecies(@Url url: String): Single<SpeciesResponseModel>
+    fun getCharacterSpecies(@Url url: String?): Single<SpeciesResponseModel>
 
     @GET
-    fun getCharacterHomeworld(@Url url: String): Single<HomeworldResponseModel>
+    fun getCharacterHomeworld(@Url url: String?): Single<HomeworldResponseModel?>
 
     @GET
-    fun getCharacterFilms(@Url url: String): Single<FilmResponseModel>
+    fun getCharacterFilms(@Url url: String?): Single<FilmResponseModel>
 
 }

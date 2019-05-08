@@ -10,6 +10,7 @@ import com.karntrehan.starwars.extensions.divide
 import com.karntrehan.starwars.extensions.hide
 import com.karntrehan.starwars.extensions.show
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 
@@ -17,14 +18,16 @@ class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : Base
 
     private val characterDetails = MutableLiveData<CharacterDetailsModel>()
 
-    private var specieName: String = ""
-    private var specieLanguage: String = ""
+    private var specieName: String? = null
+    private var specieLanguage: String? = null
 
     private val specieDetails = mutableListOf<SpeciesDetailsModel>()
 
     fun getCharacterDetails(url: String): LiveData<CharacterDetailsModel> {
         if (characterDetails.value == null) {
+
             _loading.show()
+
             repo.getCharacterDetails(url)
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.computation())
@@ -45,8 +48,7 @@ class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : Base
                     .observeOn(Schedulers.computation())
                     .map { homeworldResponse ->
                         specieDetails.add(SpeciesDetailsModel(specieName, specieLanguage,
-                                homeworldResponse.name, homeworldResponse.population)
-                        )
+                                homeworldResponse.name, homeworldResponse.population))
                     }
                     .toList()
                     .map {
@@ -54,6 +56,7 @@ class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : Base
                         characterDetails.postValue(newData)
                         return@map newData
                     }
+                    .onErrorResumeNext { Single.just(characterDetails.value) }
 
                     .observeOn(Schedulers.io())
                     .flatMapObservable { details -> Observable.fromIterable(details.filmUrls) }

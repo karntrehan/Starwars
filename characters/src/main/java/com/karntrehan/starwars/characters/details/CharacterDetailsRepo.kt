@@ -11,10 +11,10 @@ class CharacterDetailsRepo(private val service: CharacterService) : CharacterDet
 
     override fun getCharacterDetails(url: String): Single<CharacterDetailsModel> = service.getCharacterDetails(url)
 
-    override fun getSpecieDetails(url: String): Single<SpeciesResponseModel> = service.getCharacterSpecies(url)
+    override fun getSpecieDetails(url: String?): Single<SpeciesResponseModel> = service.getCharacterSpecies(url)
 
-    override fun getFilmDetails(url: String): Single<FilmResponseModel> = service.getCharacterFilms(url)
+    override fun getFilmDetails(url: String?): Single<FilmResponseModel> = service.getCharacterFilms(url)
 
-    override fun getHomeworldDetails(url: String): Single<HomeworldResponseModel> = service.getCharacterHomeworld(url)
+    override fun getHomeworldDetails(url: String?): Single<HomeworldResponseModel?> = service.getCharacterHomeworld(url)
 
 }
