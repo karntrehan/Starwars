@@ -7,7 +7,9 @@ import com.karntrehan.starwars.characters.details.CharacterDetailsFragment
 import com.karntrehan.starwars.characters.search.CharacterSearchFragment
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
 
+//Koin setup
 private val loadCharacterDependencies by lazy { CharacterDH.init() }
+
 private fun injectCharacterDependencies() = loadCharacterDependencies
 
 class CharacterActivity : AppCompatActivity(), CharacterSearchFragment.CharacterNavigator {
@@ -18,7 +20,7 @@ class CharacterActivity : AppCompatActivity(), CharacterSearchFragment.Character
 
         injectCharacterDependencies()
 
-        navigateTo(CharacterSearchFragment.newInstance(), CharacterSearchFragment.TAG)
+        displayFragment(CharacterSearchFragment.newInstance(), CharacterSearchFragment.TAG)
     }
 
     override fun onBackPressed() {
@@ -27,11 +29,12 @@ class CharacterActivity : AppCompatActivity(), CharacterSearchFragment.Character
         else finish()
     }
 
+    //Character navigator interactions
     override fun showCharacterDetails(character: CharacterSearchModel) {
-        navigateTo(CharacterDetailsFragment.newInstance(character), CharacterDetailsFragment.TAG)
+        displayFragment(CharacterDetailsFragment.newInstance(character), CharacterDetailsFragment.TAG)
     }
 
-    private fun navigateTo(fragment: Fragment, tag: String) {
+    private fun displayFragment(fragment: Fragment, tag: String) {
         if (supportFragmentManager.findFragmentByTag(tag) != null) return
 
         supportFragmentManager

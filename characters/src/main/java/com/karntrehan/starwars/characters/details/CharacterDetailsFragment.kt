@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_character_details.*
 import org.koin.android.ext.android.inject
 
 class CharacterDetailsFragment : BaseFragment() {
+
     override val layout = R.layout.fragment_character_details
 
     override val viewModel: CharacterDetailsVM by inject()
@@ -52,12 +53,15 @@ class CharacterDetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpToolbar(toolbar, selectedCharacter?.name)
 
+        //Disable swiperefreshlayout's swipe functionality
         srlDetails.isEnabled = false
 
+        //Set the details passed from previous fragment
         tvName.text = selectedCharacter?.name
         tvYOB.text = selectedCharacter?.birthYear
 
         selectedCharacter?.url?.run {
+            //Trigger character details load
             viewModel.getCharacterDetails(this)
                     .observe(this@CharacterDetailsFragment, Observer { details ->
                         handleCharacterDetails(details)
@@ -66,6 +70,9 @@ class CharacterDetailsFragment : BaseFragment() {
 
     }
 
+    /**
+     * Set the character details to the UI
+     * */
     private fun handleCharacterDetails(details: CharacterDetailsModel) {
 
         tvName.text = details.name
@@ -89,9 +96,9 @@ class CharacterDetailsFragment : BaseFragment() {
             llSpeciesDetails.visible()
             llSpeciesDetails.removeAllViews()
             forEach {
-                val specieLanguageView = SpecieDetailsView(parentActivity)
-                specieLanguageView.specieDetails(it)
-                llSpeciesDetails.addView(specieLanguageView)
+                val specieDetailsView = SpecieDetailsView(parentActivity)
+                specieDetailsView.specieDetails(it)
+                llSpeciesDetails.addView(specieDetailsView)
             }
         }
 

@@ -13,6 +13,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.create
 
+/*Dependency holder for Character module*/
 object CharacterDH {
 
     fun init() {

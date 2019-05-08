@@ -19,19 +19,16 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
     private var nextPageUrl: String? = ""
     private var processing: Boolean = false
 
-
     private val _paginationLoading = MutableLiveData<Boolean>()
     val paginationLoading: LiveData<Boolean> by lazy { _paginationLoading }
 
     private val initialAPI = "people"
 
-    private val TAG = "CharacterSearchVM"
-
-    fun initialLoad(enforce: Boolean = false) {
-        if (!enforce && _characters.value != null && !_characters.value.isNullOrEmpty()) return
+    fun initialLoad() {
+        if (_characters.value != null && !_characters.value.isNullOrEmpty()) return
 
         _loading.show()
-        getCharacters(url = initialAPI, resetItems = enforce)
+        getCharacters(url = initialAPI, resetItems = true)
     }
 
     private fun getCharacters(url: String, resetItems: Boolean) {
@@ -41,7 +38,13 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
         handleCharactersObs(repo.characters(url), resetItems)
     }
 
-    private fun handleCharactersObs(charactersObs: Single<RemoteResponse<List<CharacterSearchModel>>>, resetItems: Boolean) {
+    /**
+     * Handle the characters returned from the API
+     *
+     * resetItems clears the current contents.
+     * */
+    private fun handleCharactersObs(charactersObs: Single<RemoteResponse<List<CharacterSearchModel>>>,
+                                    resetItems: Boolean) {
         charactersObs
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
@@ -68,11 +71,12 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
                                    existingData: List<CharacterSearchModel>?,
                                    newData: List<CharacterSearchModel>): List<CharacterSearchModel> {
         val finalData = mutableListOf<CharacterSearchModel>()
-        if (!resetItems && !existingData.isNullOrEmpty()) {
+        if (resetItems || existingData.isNullOrEmpty())
+            finalData.addAll(newData)
+        else {
             finalData.addAll(existingData)
             finalData.addAll(newData)
-        } else
-            finalData.addAll(newData)
+        }
         return finalData
     }
 

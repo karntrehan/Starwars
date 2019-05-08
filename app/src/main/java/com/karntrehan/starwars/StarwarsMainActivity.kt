@@ -11,6 +11,7 @@ class StarwarsMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_starwars_main)
 
+        //Open the Characters activity on app launch
         startActivity(intentTo(Activities.Characters))
         finish()
     }

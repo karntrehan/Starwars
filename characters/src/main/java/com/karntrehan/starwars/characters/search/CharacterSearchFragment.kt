@@ -68,7 +68,7 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
             refreshCharacters()
         }
 
-        startListeningToPaginationLoading()
+        startListeningToPaginationLoadingState()
 
         startListeningToCharacters()
 
@@ -80,6 +80,30 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.menu_search, menu)
+        val myActionMenuItem = menu.findItem(R.id.item_search)
+        searchView = myActionMenuItem.actionView as SearchView
+        searchView?.queryHint = getString(R.string.enter_character_name)
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                searchListener.onNext(newText)
+                return false
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        rvCharacters.addOnScrollListener(endlessScrollListener)
+    }
+
     private fun refreshCharacters() {
         llNoData.gone()
         searchView?.setQuery("", false)
@@ -87,7 +111,7 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
         viewModel.refreshCharacters()
     }
 
-    private fun startListeningToPaginationLoading() {
+    private fun startListeningToPaginationLoadingState() {
         viewModel.paginationLoading.observe(this, Observer {
             if (it) {
                 pbLoading.visible()
@@ -131,25 +155,6 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear()
-        inflater.inflate(R.menu.menu_search, menu)
-        val myActionMenuItem = menu.findItem(R.id.item_search)
-        searchView = myActionMenuItem.actionView as SearchView
-        searchView?.queryHint = getString(R.string.enter_character_name)
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                searchListener.onNext(newText)
-                return false
-            }
-        })
-    }
-
     override fun hideLoading() {
         srlCharacters.isRefreshing = false
     }
@@ -160,11 +165,6 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
 
     interface CharacterNavigator {
         fun showCharacterDetails(character: CharacterSearchModel)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        rvCharacters.addOnScrollListener(endlessScrollListener)
     }
 
     //Adapter interactions

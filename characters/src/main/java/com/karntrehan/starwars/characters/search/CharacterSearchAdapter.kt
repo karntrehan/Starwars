@@ -14,10 +14,12 @@ import kotlinx.android.synthetic.main.item_character_search.view.*
 class CharacterSearchAdapter(private val interaction: Interaction? = null) :
         ListAdapter<CharacterSearchModel, CharacterSearchAdapter.CharacterSearchVH>(CharacterSearchModelDC()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CharacterSearchVH(
-            LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_character_search, parent, false), interaction
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+            CharacterSearchVH(
+                    LayoutInflater.from(parent.context).inflate(R.layout.item_character_search,
+                            parent,
+                            false),
+                    interaction)
 
     override fun onBindViewHolder(holder: CharacterSearchVH, position: Int) = holder.bind(getItem(position))
 

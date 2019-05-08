@@ -99,6 +99,7 @@ abstract class BaseFragment : Fragment() {
         showToast(getString(reason))
     }
 
+    //Open to allow extending fragment to override this behaviour
     protected open fun showNetworkError() {
         showToast(com.karntrehan.starwars.R.string.cannot_connect_to_internet)
     }
@@ -118,8 +119,8 @@ abstract class BaseFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
-
     //endregion
-    protected fun popBack() = parentActivity.supportFragmentManager.popBackStack()
+
+    protected open fun popBack() = parentActivity.supportFragmentManager.popBackStack()
 
 }

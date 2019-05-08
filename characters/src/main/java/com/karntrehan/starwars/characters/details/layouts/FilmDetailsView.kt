@@ -9,6 +9,9 @@ import com.karntrehan.starwars.characters.details.models.FilmDetailsModel
 import com.karntrehan.starwars.extensions.isValid
 import kotlinx.android.synthetic.main.view_character_film_details.view.*
 
+/**
+ * Custom view to display film details
+ * */
 class FilmDetailsView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
