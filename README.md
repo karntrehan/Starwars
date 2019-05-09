@@ -18,6 +18,6 @@ The packages are "by-feature" for easier access.
 I have implemented test case for the `CharacterDetailsVM`. The same can be implemented on other screens. 
 
 ## Improvements
-* We can improve the UI of the app. 
+* We can improve the UX and UI of the app. 
 * This is the first time I have chained API requests (on Details screen), there could be better ways to approach this, although, the current implementation is also pretty clean.
 * We can expand the tests to cover more cases. 
