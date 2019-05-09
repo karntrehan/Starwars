@@ -13,6 +13,7 @@ import com.karntrehan.starwars.characters.details.models.response.SpeciesRespons
 import com.karntrehan.starwars.characters.utils.TrampolineSchedulerRule
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Single
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,12 +41,12 @@ class CharacterDetailsVMTest {
     private val errorObs = mock<Observer<Throwable>>()
     private val gson = Gson()
 
-    val baseUrl = "https://swapi.co/api/"
-    val characterUrl = "${baseUrl}people/1/"
-    val speciesUrl = "${baseUrl}species/1/"
-    val homeworldUrl = "${baseUrl}planets/9/"
-    val filmUrl2 = "${baseUrl}films/2/"
-    val filmUrl6 = "${baseUrl}films/6/"
+    private val baseUrl = "https://swapi.co/api/"
+    private val characterUrl = "${baseUrl}people/1/"
+    private val speciesUrl = "${baseUrl}species/1/"
+    private val homeworldUrl = "${baseUrl}planets/9/"
+    private val filmUrl2 = "${baseUrl}films/2/"
+    private val filmUrl6 = "${baseUrl}films/6/"
 
     @Before
     fun setUp() {
@@ -113,9 +114,10 @@ class CharacterDetailsVMTest {
         //Mock success data response from repo
         whenever(repo.getCharacterDetails(characterUrl)).doReturn(Single.just(mockCharacterDetails()))
         whenever(repo.getSpecieDetails(speciesUrl)).doReturn(Single.just(mockCharacterSpeciesWithNoHomeworld()))
-        whenever(repo.getHomeworldDetails(null)).thenThrow(NullPointerException())
+        whenever(repo.getHomeworldDetails(null)).doReturn(Single.error(NullPointerException()))
         whenever(repo.getFilmDetails(filmUrl2)).doReturn(Single.just(mockCharacterFilm2()))
         whenever(repo.getFilmDetails(filmUrl6)).doReturn(Single.just(mockCharacterFilm6()))
+
 
         //Create a test observer for details
         val detailsObs = mock<Observer<CharacterDetailsModel>>()
@@ -158,6 +160,25 @@ class CharacterDetailsVMTest {
                 "& when some of details for species, planets and films are " +
                 "successfully returned by the server, we continue the stream " +
                 "& we push the same correctly to the UI.")
+    }
+
+    @Test
+    fun testCmToFeetValid() {
+        val expected = Pair("5.65", "67.72")
+        assertEquals(expected, viewModel.cmToFeet("172"))
+        pm("Height is correctly converted from cm to feet and inches for valid digits")
+    }
+
+    @Test
+    fun testCmToFeetInvalid() {
+        assertEquals(null, viewModel.cmToFeet("unknown"))
+        pm("Height is correctly handled for invalid digits")
+    }
+
+    @Test
+    fun testCmToFeetEmpty() {
+        assertEquals(null, viewModel.cmToFeet(""))
+        pm("Height is correctly handled for empty input")
     }
 
     //region region: Utils
@@ -212,7 +233,7 @@ class CharacterDetailsVMTest {
             SpeciesDetailsModel("Human", "Galactic Basic", "Coruscant", "1000000000000")
 
     private fun lukeSkywalkerSpecieDetailsWithoutHomeWorld() =
-            SpeciesDetailsModel("Human", "Galactic Basic", null, null)
+            SpeciesDetailsModel("Human", "Galactic Basic", "", "")
 
     private fun film2Details() = FilmDetailsModel("The Empire Strikes Back", "1980-05-17",
             "It is a dark time for the\r\nRebellion. Although the Death\r\nStar has been destroyed,\r\nImperial troops have driven the\r\nRebel forces from their hidden\r\nbase and pursued them across\r\nthe galaxy.\r\n\r\nEvading the dreaded Imperial\r\nStarfleet, a group of freedom\r\nfighters led by Luke Skywalker\r\nhas established a new secret\r\nbase on the remote ice world\r\nof Hoth.\r\n\r\nThe evil lord Darth Vader,\r\nobsessed with finding young\r\nSkywalker, has dispatched\r\nthousands of remote probes into\r\nthe far reaches of space....")

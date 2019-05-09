@@ -100,7 +100,7 @@ class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : Base
         return characterDetails
     }
 
-    private fun cmToFeet(heightCentimeters: String?): Pair<String, String>? {
+    fun cmToFeet(heightCentimeters: String?): Pair<String, String>? {
         return heightCentimeters
                 ?.toIntOrNull()
                 ?.let { Pair(it.divide(30.48), it.divide(2.54)) }
