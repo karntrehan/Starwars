@@ -11,7 +11,7 @@ buildscript {
         /*Jetpack / AndroidX dependency releases: https://dl.google.com/dl/android/maven2/index.html*/
 
         /*https://blog.jetbrains.com/kotlin/category/releases/*/
-        kotlinVersion = '1.3.30'
+        kotlinVersion = '1.3.40'
         kotlinDep = [
                 gradlePlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}",
                 stdlib      : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
@@ -37,9 +37,9 @@ buildscript {
         ]
 
         /*https://github.com/square/okhttp/blob/master/CHANGELOG.md*/
-        okhttpVersion = '3.13.1'
+        okhttpVersion = '3.14.2'
         /*https://github.com/square/retrofit/blob/master/CHANGELOG.md*/
-        retrofitVersion = '2.5.0'
+        retrofitVersion = '2.6.0'
         networking = [
                 okhttp      : "com.squareup.okhttp3:okhttp:${okhttpVersion}",
                 okhttpLog   : "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}",
