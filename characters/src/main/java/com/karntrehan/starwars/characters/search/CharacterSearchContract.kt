@@ -10,11 +10,11 @@ interface CharacterSearchContract {
         /**
          * Get all the characters with pagination
          * */
-        fun characters(url: String): Single<RemoteResponse<List<CharacterSearchModel>>>
+        suspend fun characters(url: String): RemoteResponse<List<CharacterSearchModel>>
 
         /**
          * Get searched characters with pagination
          * */
-        fun searchCharacter(query: String): Single<RemoteResponse<List<CharacterSearchModel>>>
+        suspend fun searchCharacter(query: String): RemoteResponse<List<CharacterSearchModel>>
     }
 }

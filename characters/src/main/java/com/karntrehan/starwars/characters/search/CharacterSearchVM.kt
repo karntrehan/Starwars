@@ -2,14 +2,15 @@ package com.karntrehan.starwars.characters.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.karntrehan.starwars.architecture.BaseVM
 import com.karntrehan.starwars.architecture.RemoteResponse
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
 import com.karntrehan.starwars.extensions.hide
 import com.karntrehan.starwars.extensions.show
-import io.reactivex.Single
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM() {
 
@@ -35,41 +36,44 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
         if (processing) return
 
         processing = true
-        handleCharactersObs(repo.characters(url), resetItems)
+        viewModelScope.launch {
+            try {
+                handleCharacters(remoteCharacters(url), resetItems)
+            } catch (error: Throwable) {
+                handleError(error)
+            }
+        }
     }
+
+    private suspend fun remoteCharacters(url: String) =
+        withContext(Dispatchers.IO) {
+            repo.characters(url)
+        }
 
     /**
      * Handle the characters returned from the API
      *
      * resetItems clears the current contents.
      * */
-    private fun handleCharactersObs(charactersObs: Single<RemoteResponse<List<CharacterSearchModel>>>,
-                                    resetItems: Boolean) {
-        charactersObs
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.computation())
-                .map { response ->
-                    nextPageUrl = response.next
-                    return@map response.results
-                }
-                .map { searchModels ->
-                    appendOrSetResults(resetItems, _characters.value, searchModels)
-                }
-                .subscribe({
-                    _loading.hide()
-                    _paginationLoading.hide()
-                    _characters.postValue(it)
-                    processing = false
-                }, {
-                    handleError(it)
-                    processing = false
-                })
-                .addTo(disposable)
+    private suspend fun handleCharacters(
+        response: RemoteResponse<List<CharacterSearchModel>>,
+        resetItems: Boolean
+    ) = withContext(Dispatchers.Default) {
+        nextPageUrl = response.next
+        val results = response.results
+        if (!results.isNullOrEmpty()) {
+            _characters.postValue(appendOrSetResults(resetItems, _characters.value, results))
+            _loading.hide()
+            _paginationLoading.hide()
+            processing = false
+        }
     }
 
-    private fun appendOrSetResults(resetItems: Boolean,
-                                   existingData: List<CharacterSearchModel>?,
-                                   newData: List<CharacterSearchModel>): List<CharacterSearchModel> {
+    private fun appendOrSetResults(
+        resetItems: Boolean,
+        existingData: List<CharacterSearchModel>?,
+        newData: List<CharacterSearchModel>
+    ): List<CharacterSearchModel> {
         val finalData = mutableListOf<CharacterSearchModel>()
         if (resetItems || existingData.isNullOrEmpty())
             finalData.addAll(newData)
@@ -91,8 +95,19 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
         if (query.isNullOrEmpty()) return
 
         _loading.show()
-        handleCharactersObs(repo.searchCharacter(query), true)
+        viewModelScope.launch {
+            try {
+                handleCharacters(searchedRemoteCharacters(query), true)
+            } catch (error: Throwable) {
+                handleError(error)
+            }
+        }
     }
+
+    private suspend fun searchedRemoteCharacters(query: String) =
+        withContext(Dispatchers.IO) {
+            repo.searchCharacter(query)
+        }
 
     fun refreshCharacters() {
         _loading.show()

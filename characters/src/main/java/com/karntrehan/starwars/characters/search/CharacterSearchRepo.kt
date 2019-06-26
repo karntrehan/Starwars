@@ -3,14 +3,14 @@ package com.karntrehan.starwars.characters.search
 import com.karntrehan.starwars.architecture.RemoteResponse
 import com.karntrehan.starwars.characters.CharacterService
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
-import io.reactivex.Single
+import kotlinx.coroutines.coroutineScope
 
 class CharacterSearchRepo(private val service: CharacterService) : CharacterSearchContract.Repo {
 
-    override fun characters(url: String)
-            : Single<RemoteResponse<List<CharacterSearchModel>>> = service.getCharacters(url)
+    override suspend fun characters(url: String)
+            : RemoteResponse<List<CharacterSearchModel>> = coroutineScope { service.getCharacters(url) }
 
-    override fun searchCharacter(query: String)
-            : Single<RemoteResponse<List<CharacterSearchModel>>> = service.searchCharacter(query)
+    override suspend fun searchCharacter(query: String)
+            : RemoteResponse<List<CharacterSearchModel>> = coroutineScope { service.searchCharacter(query) }
 
 }

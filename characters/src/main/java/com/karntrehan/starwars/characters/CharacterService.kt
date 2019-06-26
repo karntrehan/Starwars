@@ -14,10 +14,10 @@ import retrofit2.http.Url
 interface CharacterService {
 
     @GET
-    fun getCharacters(@Url url: String): Single<RemoteResponse<List<CharacterSearchModel>>>
+    suspend fun getCharacters(@Url url: String): RemoteResponse<List<CharacterSearchModel>>
 
     @GET("people")
-    fun searchCharacter(@Query("search") query: String): Single<RemoteResponse<List<CharacterSearchModel>>>
+    suspend fun searchCharacter(@Query("search") query: String): RemoteResponse<List<CharacterSearchModel>>
 
     @GET
     fun getCharacterDetails(@Url url: String): Single<CharacterDetailsModel>

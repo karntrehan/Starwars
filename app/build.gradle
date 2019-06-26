@@ -37,6 +37,7 @@ dependencies {
 
     //Kotlin
     api kotlinDep.stdlib
+    api kotlinDep.coroutines
 
     //Android
     api androidDependencies.appCompat
@@ -49,6 +50,7 @@ dependencies {
     //Arch components
     api archComponents.components
     kapt archComponents.componentsCompiler
+    api archComponents.viewModelKtx
 
     //Networking
     api networking.okhttp
