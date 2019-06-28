@@ -36,12 +36,8 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
         if (processing) return
 
         processing = true
-        viewModelScope.launch {
-            try {
-                handleCharacters(remoteCharacters(url), resetItems)
-            } catch (error: Throwable) {
-                handleError(error)
-            }
+        launchSafely {
+            handleCharacters(remoteCharacters(url), resetItems)
         }
     }
 
@@ -95,12 +91,8 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
         if (query.isNullOrEmpty()) return
 
         _loading.show()
-        viewModelScope.launch {
-            try {
-                handleCharacters(searchedRemoteCharacters(query), true)
-            } catch (error: Throwable) {
-                handleError(error)
-            }
+        launchSafely {
+            handleCharacters(searchedRemoteCharacters(query), true)
         }
     }
 
@@ -114,4 +106,3 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
         getCharacters(url = initialAPI, resetItems = true)
     }
 }
-
