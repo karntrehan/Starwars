@@ -2,22 +2,22 @@
 This sample app has been developed with Kotlin following an MVVM architecture pattern with a modular approach.
 
 # Working
-![Working](app_flow.gif)
+![Working](app_flow.gif =250x)
 
 # Branches
-## [master](tree/master)
-* Koin - Dependency injection
-* Reactive streams - Networking & Async.
-* LiveData and ViewModel - Isolate business logic and maintain state.
+## [master](karntrehan/Starwars/tree/coroutines)
+* **Koin**: Dependency injection
+* **Reactive streams**: Networking & Async.
+* **LiveData and ViewModel**: Isolate business logic and maintain state.
 
-## [coroutines](tree/coroutines) (WIP)
-* Koin - Dependency injection
-* Coroutines - Networking & Async.
-* LiveData and ViewModel - Isolate business logic and maintain state.
+## [coroutines](karntrehan/Starwars/tree/coroutines) (WIP)
+* **Koin**:Dependency injection
+* **Coroutines**: Networking & Async.
+* **LiveData and ViewModel**: Isolate business logic and maintain state.
 
 # Decisions
-* Koin: This is my first experiment with Koin, and it turned out to be straight-forward to implement. The performance is also great. Although, feature module support is something they are still working on.
-* Modular: The app is developed with a modular approach to support instant apps & dynamic delivery for the users. Modularity also allows us to have faster gradle build speeds, clear ownerships amongst the team & cleaner git flows. More info about modular apps can be found [here](https://medium.com/mindorks/writing-a-modular-project-on-android-304f3b09cb37).
+* **Koin**: This is my first experiment with Koin, and it turned out to be straight-forward to implement. The performance is also great. Although, feature module support is something they are still working on.
+* **Modular**: The app is developed with a modular approach to support instant apps & dynamic delivery for the users. Modularity also allows us to have faster gradle build speeds, clear ownerships amongst the team & cleaner git flows. More info about modular apps can be found [here](https://medium.com/mindorks/writing-a-modular-project-on-android-304f3b09cb37).
 
 # Structure
 `app` module is where the application initializes & `characters` dynamic module is where our sample screens reside. 
