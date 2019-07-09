@@ -24,8 +24,8 @@ This sample app has been developed with Kotlin following an MVVM architecture pa
 `CharacterActivity` holds the `CharacterSearchFragment` & `CharacterDetailsFragment`.
 The packages are "by-feature" for easier access.
 
-# Testing (WIP)
-Test cases for the `CharacterDetailsVM` have been implemented [here](characters/src/test/java/com/karntrehan/starwars/characters/details/CharacterDetailsVMTest.kt) .
+# Testing
+Test cases for the [`CharacterSearchVM`](characters/src/test/java/com/karntrehan/starwars/characters/details/CharacterSearchVMTest.kt) & [`CharacterDetailsVM`](characters/src/test/java/com/karntrehan/starwars/characters/details/CharacterDetailsVMTest.kt) have been implemented.
 
 # Todo
 * Tests.
