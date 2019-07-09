@@ -25,7 +25,7 @@ This sample app has been developed with Kotlin following an MVVM architecture pa
 The packages are "by-feature" for easier access.
 
 # Testing
-Test cases for the [`CharacterSearchVM`](characters/src/test/java/com/karntrehan/starwars/characters/details/CharacterSearchVMTest.kt) & [`CharacterDetailsVM`](characters/src/test/java/com/karntrehan/starwars/characters/details/CharacterDetailsVMTest.kt) have been implemented.
+Test cases for the [`CharacterSearchVM`](characters/src/test/java/com/karntrehan/starwars/characters/search/CharacterSearchVMTest.kt) & [`CharacterDetailsVM`](characters/src/test/java/com/karntrehan/starwars/characters/details/CharacterDetailsVMTest.kt) have been implemented.
 
 # Todo
 * Tests.
