@@ -2,15 +2,15 @@
 This sample app has been developed with Kotlin following an MVVM architecture pattern with a modular approach.
 
 # Working
-![Working](app_flow.gif =250x)
+![Working](app_flow.gif | height=250)
 
 # Branches
-## [master](karntrehan/Starwars/tree/coroutines)
+## [master](https://github.com/karntrehan/Starwars/tree/coroutines)
 * **Koin**: Dependency injection
 * **Reactive streams**: Networking & Async.
 * **LiveData and ViewModel**: Isolate business logic and maintain state.
 
-## [coroutines](karntrehan/Starwars/tree/coroutines) (WIP)
+## [coroutines](https://github.com/karntrehan/Starwars/tree/coroutines) (WIP)
 * **Koin**:Dependency injection
 * **Coroutines**: Networking & Async.
 * **LiveData and ViewModel**: Isolate business logic and maintain state.
