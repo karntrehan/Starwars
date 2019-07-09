@@ -2,7 +2,7 @@
 This sample app has been developed with Kotlin following an MVVM architecture pattern with a modular approach.
 
 # Working
-![Working](app_flow.gif | height=250)
+![Working](app_flow.gif)
 
 # Branches
 ## [master](https://github.com/karntrehan/Starwars/tree/coroutines)
