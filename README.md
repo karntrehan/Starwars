@@ -28,8 +28,7 @@ The packages are "by-feature" for easier access.
 Test cases for the [`CharacterSearchVM`](characters/src/test/java/com/karntrehan/starwars/characters/search/CharacterSearchVMTest.kt) & [`CharacterDetailsVM`](characters/src/test/java/com/karntrehan/starwars/characters/details/CharacterDetailsVMTest.kt) have been implemented.
 
 # Todo
-* Tests.
-* Coroutines on Details screen
+* Coroutines on Details screen in `coroutines` branch
 
 # Contribution
 Feel free to open an issue or submit a pull request with improvements.
