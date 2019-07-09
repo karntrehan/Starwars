@@ -1,5 +1,6 @@
 package com.karntrehan.starwars.characters.search
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.karntrehan.starwars.architecture.BaseVM
@@ -43,33 +44,37 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
      *
      * resetItems clears the current contents.
      * */
-    private fun handleCharactersObs(charactersObs: Single<RemoteResponse<List<CharacterSearchModel>>>,
-                                    resetItems: Boolean) {
+    private fun handleCharactersObs(
+        charactersObs: Single<RemoteResponse<List<CharacterSearchModel>>>,
+        resetItems: Boolean
+    ) {
         charactersObs
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.computation())
-                .map { response ->
-                    nextPageUrl = response.next
-                    return@map response.results
-                }
-                .map { searchModels ->
-                    appendOrSetResults(resetItems, _characters.value, searchModels)
-                }
-                .subscribe({
-                    _loading.hide()
-                    _paginationLoading.hide()
-                    _characters.postValue(it)
-                    processing = false
-                }, {
-                    handleError(it)
-                    processing = false
-                })
-                .addTo(disposable)
+            .subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.computation())
+            .map { response ->
+                nextPageUrl = response.next
+                return@map response.results
+            }
+            .map { searchModels ->
+                appendOrSetResults(resetItems, _characters.value, searchModels)
+            }
+            .subscribe({
+                _loading.hide()
+                _paginationLoading.hide()
+                _characters.postValue(it)
+                processing = false
+            }, {
+                handleError(it)
+                processing = false
+            })
+            .addTo(disposable)
     }
 
-    private fun appendOrSetResults(resetItems: Boolean,
-                                   existingData: List<CharacterSearchModel>?,
-                                   newData: List<CharacterSearchModel>): List<CharacterSearchModel> {
+    private fun appendOrSetResults(
+        resetItems: Boolean,
+        existingData: List<CharacterSearchModel>?,
+        newData: List<CharacterSearchModel>
+    ): List<CharacterSearchModel> {
         val finalData = mutableListOf<CharacterSearchModel>()
         if (resetItems || existingData.isNullOrEmpty())
             finalData.addAll(newData)
@@ -97,6 +102,19 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
     fun refreshCharacters() {
         _loading.show()
         getCharacters(url = initialAPI, resetItems = true)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun setCharacter(characters: List<CharacterSearchModel>?) {
+        _characters.postValue(characters)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun getInitialApi() = initialAPI
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun setNextPageUrl(url: String?) {
+        nextPageUrl = url
     }
 }
 

@@ -183,7 +183,7 @@ class CharacterDetailsVMTest {
 
     //region region: Utils
     private fun pm(message: String) {
-        System.out.println("\nCharacter details verified: $message")
+        println("\nCharacter details verified: $message")
     }
 
     private fun mockCharacterDetails(): CharacterDetailsModel {
