@@ -1,5 +1,6 @@
 package com.karntrehan.starwars.characters.search
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -104,5 +105,18 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
     fun refreshCharacters() {
         _loading.show()
         getCharacters(url = initialAPI, resetItems = true)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun setCharacter(characters: List<CharacterSearchModel>?) {
+        _characters.postValue(characters)
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun getInitialApi() = initialAPI
+
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    fun setNextPageUrl(url: String?) {
+        nextPageUrl = url
     }
 }
