@@ -10,7 +10,7 @@ This sample app has been developed with Kotlin following an MVVM architecture pa
 * **Reactive streams**: Networking & Async.
 * **LiveData and ViewModel**: Isolate business logic and maintain state.
 
-## [coroutines](https://github.com/karntrehan/Starwars/tree/coroutines) (WIP)
+## [coroutines](https://github.com/karntrehan/Starwars/tree/coroutines)
 * **Koin**:Dependency injection
 * **Coroutines**: Networking & Async.
 * **LiveData and ViewModel**: Isolate business logic and maintain state.
@@ -28,7 +28,7 @@ The packages are "by-feature" for easier access.
 Test cases for the [`CharacterSearchVM`](characters/src/test/java/com/karntrehan/starwars/characters/search/CharacterSearchVMTest.kt) & [`CharacterDetailsVM`](characters/src/test/java/com/karntrehan/starwars/characters/details/CharacterDetailsVMTest.kt) have been implemented.
 
 # Todo
-* Coroutines on Details screen in `coroutines` branch
+* ~~Coroutines on Details screen in `coroutines` branch~~
 
 # Contribution
 Feel free to open an issue or submit a pull request with improvements.
