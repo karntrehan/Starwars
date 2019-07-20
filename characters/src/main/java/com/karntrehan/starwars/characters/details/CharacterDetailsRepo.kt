@@ -6,15 +6,20 @@ import com.karntrehan.starwars.characters.details.models.response.FilmResponseMo
 import com.karntrehan.starwars.characters.details.models.response.HomeworldResponseModel
 import com.karntrehan.starwars.characters.details.models.response.SpeciesResponseModel
 import io.reactivex.Single
+import kotlinx.coroutines.coroutineScope
 
 class CharacterDetailsRepo(private val service: CharacterService) : CharacterDetailsContract.Repo {
 
-    override fun getCharacterDetails(url: String): Single<CharacterDetailsModel> = service.getCharacterDetails(url)
+    override suspend fun getCharacterDetails(url: String): CharacterDetailsModel =
+        coroutineScope { service.getCharacterDetails(url) }
 
-    override fun getSpecieDetails(url: String?): Single<SpeciesResponseModel> = service.getCharacterSpecies(url)
+    override suspend fun getSpecieDetails(url: String?): SpeciesResponseModel =
+        coroutineScope { service.getCharacterSpecies(url) }
 
-    override fun getFilmDetails(url: String?): Single<FilmResponseModel> = service.getCharacterFilms(url)
+    override suspend fun getFilmDetails(url: String?): FilmResponseModel =
+        coroutineScope { service.getCharacterFilms(url) }
 
-    override fun getHomeworldDetails(url: String?): Single<HomeworldResponseModel?> = service.getCharacterHomeworld(url)
+    override suspend fun getHomeworldDetails(url: String?): HomeworldResponseModel =
+        coroutineScope { service.getCharacterHomeworld(url) }
 
 }

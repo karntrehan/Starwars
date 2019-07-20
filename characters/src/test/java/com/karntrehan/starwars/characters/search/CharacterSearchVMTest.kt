@@ -63,128 +63,22 @@ class CharacterSearchVMTest {
 
     @Test
     fun testInitialLoad() {
-        //Mock success data response from repo
-        whenever(repo.characters(viewModel.getInitialApi())).doReturn(Single.just(initialSuccessData))
-
-        //Trigger the load
-        viewModel.initialLoad()
-
-        //Verify loading state changes
-        verify(loadingObs).onChanged(true)
-
-        //Verify correct methods are called in the repo
-        verify(repo).characters(viewModel.getInitialApi())
-
-        //Verify loading state changes again
-        verify(loadingObs).onChanged(false)
-
-        //Verify data pushed to UI
-        verify(charactersObs).onChanged(any())
-
-        //Verify error is never pushed to the UI
-        verify(errorObs, never()).onChanged(any())
-
-        //Verify the characters are reset and not appended
-        assertEquals(10, viewModel.characters.value?.size)
-
-        pm("Initial load calls the correct functions in the repo and sets success data correctly")
+        //TODO
     }
 
     @Test
     fun testLoadNextValid() {
-        //Mock success data response from repo
-        whenever(repo.characters(initialSuccessData.next!!)).doReturn(Single.just(initialSuccessData))
-
-        //Setup
-        viewModel.setCharacter(initialSuccessData.results)
-        val nextUrl = initialSuccessData.next
-        //Set valid next page url
-        viewModel.setNextPageUrl(nextUrl)
-
-        //Trigger next load
-        viewModel.loadNextPage()
-
-        //Verify pagination state changes
-        verify(paginationObs).onChanged(true)
-
-        //Verify correct methods are called in the repo
-        verify(repo).characters(initialSuccessData.next!!)
-
-        //Verify pagination state changes again
-        verify(paginationObs).onChanged(false)
-
-        //Verify data pushed to UI
-        verify(charactersObs, atLeastOnce()).onChanged(any())
-
-        //Verify error is never pushed to the UI
-        verify(errorObs, never()).onChanged(any())
-
-        //Verify the characters are not reset and appended instead
-        assertEquals(20, viewModel.characters.value?.size)
-
-        pm("Load next with a valid next page url calls the correct functions in the repo and appends success data correctly")
+        //TODO
     }
 
     @Test
     fun testSearchCharacter() {
-        val queriedCharacter = "luke"
-        //Mock success data response from repo
-        whenever(repo.searchCharacter(queriedCharacter)).doReturn(Single.just(mockLukeSearch()))
-
-        //Setup
-        viewModel.setCharacter(initialSuccessData.results)
-
-        //Trigger search
-        viewModel.searchCharacter(queriedCharacter)
-
-        //Verify loading state changes
-        verify(loadingObs).onChanged(true)
-
-        //Verify correct methods are called in the repo
-        verify(repo).searchCharacter(queriedCharacter)
-
-        //Verify loading state changes again
-        verify(loadingObs).onChanged(false)
-
-        //Verify data pushed to UI
-        verify(charactersObs, atLeastOnce()).onChanged(any())
-
-        //Verify error is never pushed to the UI
-        verify(errorObs, never()).onChanged(any())
-
-        //Verify the characters are reset and not appended
-        assertEquals(1, viewModel.characters.value?.size)
-
-        pm("Search for a character triggers correct functions in the repo and resets the results to the UI")
+        //TODO
     }
 
     @Test
     fun testRefresh() {
-        //Mock success data response from repo
-        whenever(repo.characters(viewModel.getInitialApi())).doReturn(Single.just(initialSuccessData))
-
-        //Trigger the load
-        viewModel.refreshCharacters()
-
-        //Verify loading state changes
-        verify(loadingObs).onChanged(true)
-
-        //Verify correct methods are called in the repo
-        verify(repo).characters(viewModel.getInitialApi())
-
-        //Verify loading state changes again
-        verify(loadingObs).onChanged(false)
-
-        //Verify data pushed to UI
-        verify(charactersObs).onChanged(any())
-
-        //Verify error is never pushed to the UI
-        verify(errorObs, never()).onChanged(any())
-
-        //Verify the characters are reset and not appended
-        assertEquals(10, viewModel.characters.value?.size)
-
-        pm("Refresh calls the correct functions in the repo and sets success data correctly")
+        //TODO
     }
 
 

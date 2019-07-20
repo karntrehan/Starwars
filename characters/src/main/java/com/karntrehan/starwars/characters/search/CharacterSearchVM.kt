@@ -3,14 +3,12 @@ package com.karntrehan.starwars.characters.search
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.karntrehan.starwars.architecture.BaseVM
 import com.karntrehan.starwars.architecture.RemoteResponse
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
 import com.karntrehan.starwars.extensions.hide
 import com.karntrehan.starwars.extensions.show
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM() {

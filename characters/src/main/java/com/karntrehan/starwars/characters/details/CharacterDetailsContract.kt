@@ -12,22 +12,22 @@ interface CharacterDetailsContract {
         /**
          * Get character details [CharacterDetailsModel] from the passed url
          * */
-        fun getCharacterDetails(url: String): Single<CharacterDetailsModel>
+        suspend fun getCharacterDetails(url: String): CharacterDetailsModel
 
         /**
          * Get specie details [SpeciesResponseModel] from the passed url
          * */
-        fun getSpecieDetails(url: String?): Single<SpeciesResponseModel>
+        suspend fun getSpecieDetails(url: String?): SpeciesResponseModel
 
         /**
          * Get film details [FilmResponseModel] from the passed url
          * */
-        fun getFilmDetails(url: String?): Single<FilmResponseModel>
+        suspend fun getFilmDetails(url: String?): FilmResponseModel
 
         /**
         * Get homeworld details [HomeworldResponseModel] from the passed url
         * */
-        fun getHomeworldDetails(url: String?): Single<HomeworldResponseModel?>
+        suspend fun getHomeworldDetails(url: String?): HomeworldResponseModel
     }
 
 }

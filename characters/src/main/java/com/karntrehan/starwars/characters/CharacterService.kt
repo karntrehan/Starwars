@@ -20,15 +20,15 @@ interface CharacterService {
     suspend fun searchCharacter(@Query("search") query: String): RemoteResponse<List<CharacterSearchModel>>
 
     @GET
-    fun getCharacterDetails(@Url url: String): Single<CharacterDetailsModel>
+    suspend fun getCharacterDetails(@Url url: String): CharacterDetailsModel
 
     @GET
-    fun getCharacterSpecies(@Url url: String?): Single<SpeciesResponseModel>
+    suspend fun getCharacterSpecies(@Url url: String?): SpeciesResponseModel
 
     @GET
-    fun getCharacterHomeworld(@Url url: String?): Single<HomeworldResponseModel?>
+    suspend fun getCharacterHomeworld(@Url url: String?): HomeworldResponseModel
 
     @GET
-    fun getCharacterFilms(@Url url: String?): Single<FilmResponseModel>
+    suspend fun getCharacterFilms(@Url url: String?): FilmResponseModel
 
 }
