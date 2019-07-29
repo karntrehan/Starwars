@@ -27,8 +27,8 @@ The packages are "by-feature" for easier access.
 # Testing
 Test cases for the [`CharacterSearchVM`](characters/src/test/java/com/karntrehan/starwars/characters/search/CharacterSearchVMTest.kt) & [`CharacterDetailsVM`](characters/src/test/java/com/karntrehan/starwars/characters/details/CharacterDetailsVMTest.kt) have been implemented.
 
-# Todo
-* ~~Coroutines on Details screen in `coroutines` branch~~
+# Write-ups
+* [Rx vs Coroutines: Complex network chains on Android](https://medium.com/mindorks/rx-vs-coroutines-complex-network-chains-on-android-19d20d164cd1)
 
 # Contribution
 Feel free to open an issue or submit a pull request with improvements.
