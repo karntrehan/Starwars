@@ -47,6 +47,11 @@ dependencies {
     api koinDep.android
     api koinDep.viewmodel
 
+    api daggerAndroidDep.core
+    api daggerAndroidDep.support
+    kapt daggerAndroidDep.compiler
+    kapt daggerAndroidDep.processor
+
     //Arch components
     api archComponents.components
     kapt archComponents.componentsCompiler

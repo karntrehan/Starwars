@@ -31,6 +31,14 @@ buildscript {
                 viewmodel: "org.koin:koin-androidx-viewmodel:${koinVersion}",
         ]
 
+        daggerAndroidVersion = '2.24'
+        daggerAndroidDep = [
+                core: "com.google.dagger:dagger-android:${daggerAndroidVersion}",
+                compiler: "com.google.dagger:dagger-compiler:${daggerAndroidVersion}",
+                support: "com.google.dagger:dagger-android-support:${daggerAndroidVersion}",
+                processor: "com.google.dagger:dagger-android-processor:${daggerAndroidVersion}",
+        ]
+
         archComponentsVersion = '2.0.0'
         archComponents = [
                 components        : "androidx.lifecycle:lifecycle-extensions:${archComponentsVersion}",
