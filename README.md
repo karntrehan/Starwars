@@ -6,14 +6,14 @@ This sample app has been developed with Kotlin following an MVVM architecture pa
 
 # Branches
 ## [master](https://github.com/karntrehan/Starwars/tree/coroutines)
-* **Koin**: Dependency injection
-* **Reactive streams**: Networking & Async.
-* **LiveData and ViewModel**: Isolate business logic and maintain state.
+* **[Koin](https://github.com/InsertKoinIO/koin)**: Dependency injection
+* **[Reactive streams](https://github.com/ReactiveX/RxJava)**: Networking & Async.
+* **[LiveData and ViewModel](https://developer.android.com/topic/libraries/architecture)**: Isolate business logic and maintain state.
 
 ## [coroutines](https://github.com/karntrehan/Starwars/tree/coroutines)
-* **Koin**:Dependency injection
-* **Coroutines**: Networking & Async.
-* **LiveData and ViewModel**: Isolate business logic and maintain state.
+* **[Dagger 2](https://dagger.dev/)**:Dependency injection
+* **[Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)**: Networking & Async.
+* **[LiveData and ViewModel](https://developer.android.com/topic/libraries/architecture)**: Isolate business logic and maintain state.
 
 # Decisions
 * **Koin**: This is my first experiment with Koin, and it turned out to be straight-forward to implement. The performance is also great. Although, feature module support is something they are still working on.
@@ -23,6 +23,10 @@ This sample app has been developed with Kotlin following an MVVM architecture pa
 `app` module is where the application initializes & `characters` dynamic module is where our sample screens reside. 
 `CharacterActivity` holds the `CharacterSearchFragment` & `CharacterDetailsFragment`.
 The packages are "by-feature" for easier access.
+
+# Running
+You will need a device / emulator with Android Oreo (API 27) and up.
+![Configuration](run_configuration.png)
 
 # Testing
 Test cases for the [`CharacterSearchVM`](characters/src/test/java/com/karntrehan/starwars/characters/search/CharacterSearchVMTest.kt) & [`CharacterDetailsVM`](characters/src/test/java/com/karntrehan/starwars/characters/details/CharacterDetailsVMTest.kt) have been implemented.
