@@ -28,7 +28,7 @@ dependencies {
     implementation project(':app')
 
     //DI
-    kapt daggerAndroidDep.processor
+    kapt daggerDep.compiler
 
     //testing
     testImplementation testing.junit

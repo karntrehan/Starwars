@@ -6,7 +6,6 @@ import com.google.gson.FieldAttributes
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.karntrehan.starwars.BuildConfig
-import com.karntrehan.starwars.StartWarsApplication
 import com.karntrehan.starwars.architecture.Exclude
 import dagger.Module
 import dagger.Provides
@@ -54,9 +53,9 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesOkhttpCache(application: StartWarsApplication): Cache {
+    fun providesOkhttpCache(context: Context): Cache {
         val cacheSize = 10 * 1024 * 1024 // 10 MB
-        return Cache(application.applicationContext.cacheDir, cacheSize.toLong())
+        return Cache(context.cacheDir, cacheSize.toLong())
     }
 
     @Provides

@@ -43,14 +43,8 @@ dependencies {
     api androidDependencies.appCompat
 
     //DI
-    api koinDep.core
-    api koinDep.android
-    api koinDep.viewmodel
-
-    api daggerAndroidDep.core
-    api daggerAndroidDep.support
-    kapt daggerAndroidDep.compiler
-    kapt daggerAndroidDep.processor
+    api daggerDep.core
+    kapt daggerDep.compiler
 
     //Arch components
     api archComponents.components

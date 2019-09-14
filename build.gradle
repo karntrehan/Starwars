@@ -24,19 +24,10 @@ buildscript {
                 appCompat   : "androidx.appcompat:appcompat:1.0.2",
         ]
 
-        koinVersion = '2.0.0-rc-2'
-        koinDep = [
-                core     : "org.koin:koin-core:${koinVersion}",
-                android  : "org.koin:koin-android:${koinVersion}",
-                viewmodel: "org.koin:koin-androidx-viewmodel:${koinVersion}",
-        ]
-
-        daggerAndroidVersion = '2.24'
-        daggerAndroidDep = [
-                core: "com.google.dagger:dagger-android:${daggerAndroidVersion}",
-                compiler: "com.google.dagger:dagger-compiler:${daggerAndroidVersion}",
-                support: "com.google.dagger:dagger-android-support:${daggerAndroidVersion}",
-                processor: "com.google.dagger:dagger-android-processor:${daggerAndroidVersion}",
+        daggerVersion = '2.24'
+        daggerDep = [
+                core: "com.google.dagger:dagger:${daggerVersion}",
+                compiler: "com.google.dagger:dagger-compiler:${daggerVersion}",
         ]
 
         archComponentsVersion = '2.0.0'

@@ -1,49 +1,36 @@
 package com.karntrehan.starwars.characters
 
-import com.karntrehan.starwars.characters.details.CharacterDetailsContract
-import com.karntrehan.starwars.characters.details.CharacterDetailsRepo
-import com.karntrehan.starwars.characters.details.CharacterDetailsVM
-import com.karntrehan.starwars.characters.search.CharacterSearchContract
-import com.karntrehan.starwars.characters.search.CharacterSearchRepo
-import com.karntrehan.starwars.characters.search.CharacterSearchVM
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.context.loadKoinModules
-import org.koin.core.module.Module
-import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.create
+import com.karntrehan.starwars.StartWarsApplication
+import com.karntrehan.starwars.characters.details.di.CharacterDetailsComponent
+import com.karntrehan.starwars.characters.details.di.DaggerCharacterDetailsComponent
+import com.karntrehan.starwars.characters.di.CharacterComponent
+import com.karntrehan.starwars.characters.di.DaggerCharacterComponent
+import com.karntrehan.starwars.characters.search.di.CharacterSearchComponent
+import com.karntrehan.starwars.characters.search.di.DaggerCharacterSearchComponent
 
 /*Dependency holder for Character module*/
 object CharacterDH {
 
-    fun init() {
-        loadKoinModules(characterDetailsModule(), characterSearchModule(), characterModule())
+    var characterComponent: CharacterComponent? = null
+
+    fun init(application: StartWarsApplication) {
+        if (characterComponent == null)
+            characterComponent = DaggerCharacterComponent
+                .builder()
+                .coreComponent(application.coreComponent)
+                .build()
     }
 
-    //Details module
-    private fun characterDetailsModule(): Module = module {
-        viewModel { CharacterDetailsVM(get()) }
-        single { characterDetailsContract(get()) }
-    }
+    //Search
+    val searchComponent: CharacterSearchComponent by lazy { initSearch() }
 
-    private fun characterDetailsContract(service: CharacterService)
-            : CharacterDetailsContract.Repo = CharacterDetailsRepo(service)
+    private fun initSearch(): CharacterSearchComponent =
+        DaggerCharacterSearchComponent.builder().characterComponent(characterComponent).build()
 
-    //Search module
-    private fun characterSearchModule(): Module = module {
-        viewModel { CharacterSearchVM(get()) }
-        single { characterSearchContract(get()) }
-    }
+    //Details
+    val detailsComponent: CharacterDetailsComponent by lazy { initDetails() }
 
-    private fun characterSearchContract(service: CharacterService)
-            : CharacterSearchContract.Repo = CharacterSearchRepo(service)
-
-
-    //Character module
-    private fun characterModule(): Module = module {
-        single { characterService(get()) }
-    }
-
-    private fun characterService(retrofit: Retrofit): CharacterService = retrofit.create()
+    private fun initDetails(): CharacterDetailsComponent =
+        DaggerCharacterDetailsComponent.builder().characterComponent(characterComponent).build()
 
 }

@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import java.net.UnknownHostException
 
@@ -21,7 +23,15 @@ abstract class BaseFragment : Fragment() {
 
     abstract val layout: Int
 
-    protected abstract val viewModel: BaseVM
+    abstract val vmClass: Class<out BaseVM>
+
+    private val viewModelFactory: ViewModelProvider.Factory by lazy { provideViewModelFactory() }
+
+    abstract fun provideViewModelFactory(): ViewModelProvider.Factory
+
+    protected val baseVM: BaseVM by lazy {
+        ViewModelProviders.of(this, viewModelFactory).get(vmClass)
+    }
 
     protected lateinit var parentActivity: AppCompatActivity
 
@@ -33,7 +43,11 @@ abstract class BaseFragment : Fragment() {
 
     @CallSuper
     override
-    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         parentActivity = activity as AppCompatActivity
         return inflater.inflate(layout, container, false)
     }
@@ -46,7 +60,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     private fun listenToLoadingState() {
-        viewModel.loading.observe(this, Observer { loading ->
+        baseVM.loading.observe(this, Observer { loading ->
             when (loading) {
                 true -> showLoading()
                 else -> hideLoading()
@@ -60,12 +74,12 @@ abstract class BaseFragment : Fragment() {
 
     @CallSuper
     private fun listenForExceptions() {
-        viewModel.error.observe(this, Observer { error ->
+        baseVM.error.observe(this, Observer { error ->
 
             if (error == null) return@Observer
 
             //Make sure error is not propagated to all subsequent fragments
-            viewModel.errorHandled()
+            baseVM.errorHandled()
 
             Log.e("BaseFragment", error.localizedMessage, error)
             when (error) {
@@ -79,8 +93,8 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected open fun showSnackBar(
-            reason: String?,
-            length: Int = Snackbar.LENGTH_SHORT
+        reason: String?,
+        length: Int = Snackbar.LENGTH_SHORT
     ) {
         if (reason.isNullOrEmpty()) return
 
@@ -92,7 +106,7 @@ abstract class BaseFragment : Fragment() {
     protected open fun showToast(reason: String?) {
         if (reason == null) return
         Toast.makeText(context, reason, Toast.LENGTH_LONG)
-                .show()
+            .show()
     }
 
     protected open fun showToast(@StringRes reason: Int) {

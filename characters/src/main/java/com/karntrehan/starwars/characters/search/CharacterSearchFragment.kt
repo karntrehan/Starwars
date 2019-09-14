@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.karntrehan.starwars.architecture.BaseFragment
+import com.karntrehan.starwars.characters.CharacterDH
 import com.karntrehan.starwars.characters.R
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
 import com.karntrehan.starwars.extensions.EndlessScrollListener
@@ -19,15 +20,20 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.actionbar_toolbar.*
 import kotlinx.android.synthetic.main.fragment_search_character.*
-import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interaction {
 
     override val layout = R.layout.fragment_search_character
 
-    override val viewModel: CharacterSearchVM by inject()
+    override val vmClass = CharacterSearchVM::class.java
+
+    @Inject
+    lateinit var characterSearchVMF: CharacterSearchVMF
+
+    val viewModel: CharacterSearchVM by lazy { baseVM as CharacterSearchVM }
 
     private val adapter: CharacterSearchAdapter by lazy { CharacterSearchAdapter(this) }
 
@@ -46,8 +52,11 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
         fun newInstance() = CharacterSearchFragment()
     }
 
+    override fun provideViewModelFactory() = characterSearchVMF
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
+        CharacterDH.searchComponent.inject(this)
         if (context is CharacterNavigator)
             navigator = context
     }
@@ -122,14 +131,14 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
     private fun initSearchBehaviour() {
         //A listener to get user's query and manipulate it before going to vm
         searchListener
-                //To ensure queries are run when the user pauses typing
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .subscribe {
-                    //Reset the pagination state
-                    endlessScrollListener.resetState()
-                    viewModel.searchCharacter(it)
-                }
-                .addTo(viewModel.disposable)
+            //To ensure queries are run when the user pauses typing
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .subscribe {
+                //Reset the pagination state
+                endlessScrollListener.resetState()
+                viewModel.searchCharacter(it)
+            }
+            .addTo(viewModel.disposable)
     }
 
     private fun startListeningToCharacters() {
@@ -146,8 +155,9 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
     }
 
     private fun initEndlessScroll() = object : EndlessScrollListener(
-            layoutManager = rvCharacters.layoutManager as LinearLayoutManager,
-            visibleThreshold = 2) {
+        layoutManager = rvCharacters.layoutManager as LinearLayoutManager,
+        visibleThreshold = 2
+    ) {
         //This will be called each time the user scrolls
         // and only 2 elements are left in the recyclerview items.
         override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {

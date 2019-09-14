@@ -3,14 +3,10 @@ package com.karntrehan.starwars.characters
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.karntrehan.starwars.StartWarsApplication
 import com.karntrehan.starwars.characters.details.CharacterDetailsFragment
 import com.karntrehan.starwars.characters.search.CharacterSearchFragment
 import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
-
-//Koin setup
-private val loadCharacterDependencies by lazy { CharacterDH.init() }
-
-private fun injectCharacterDependencies() = loadCharacterDependencies
 
 class CharacterActivity : AppCompatActivity(), CharacterSearchFragment.CharacterNavigator {
 
@@ -18,9 +14,14 @@ class CharacterActivity : AppCompatActivity(), CharacterSearchFragment.Character
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character)
 
-        injectCharacterDependencies()
+        initCharacterDI()
 
         displayFragment(CharacterSearchFragment.newInstance(), CharacterSearchFragment.TAG)
+    }
+
+    private fun initCharacterDI() {
+        if (application is StartWarsApplication)
+            CharacterDH.init(application as StartWarsApplication)
     }
 
     override fun onBackPressed() {
@@ -31,16 +32,19 @@ class CharacterActivity : AppCompatActivity(), CharacterSearchFragment.Character
 
     //Character navigator interactions
     override fun showCharacterDetails(character: CharacterSearchModel) {
-        displayFragment(CharacterDetailsFragment.newInstance(character), CharacterDetailsFragment.TAG)
+        displayFragment(
+            CharacterDetailsFragment.newInstance(character),
+            CharacterDetailsFragment.TAG
+        )
     }
 
     private fun displayFragment(fragment: Fragment, tag: String) {
         if (supportFragmentManager.findFragmentByTag(tag) != null) return
 
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.flContainer, fragment, tag)
-                .addToBackStack(null)
-                .commitAllowingStateLoss()
+            .beginTransaction()
+            .replace(R.id.flContainer, fragment, tag)
+            .addToBackStack(null)
+            .commitAllowingStateLoss()
     }
 }
