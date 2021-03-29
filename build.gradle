@@ -19,7 +19,7 @@ buildscript {
 
         androidDependencies = [
                 /*https://developer.android.com/studio/releases/gradle-plugin*/
-                gradlePlugin: "com.android.tools.build:gradle:3.4.0",
+                gradlePlugin: "com.android.tools.build:gradle:4.1.2",
                 appCompat   : "androidx.appcompat:appcompat:1.0.2",
         ]
 

@@ -11,8 +11,6 @@ import com.karntrehan.starwars.extensions.divide
 import com.karntrehan.starwars.extensions.hide
 import com.karntrehan.starwars.extensions.show
 import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.ObservableSource
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import io.reactivex.rxkotlin.addTo
@@ -21,9 +19,6 @@ import io.reactivex.schedulers.Schedulers
 class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : BaseVM() {
 
     private val characterDetails = MutableLiveData<CharacterDetailsModel>()
-
-    private var specieName: String? = null
-    private var specieLanguage: String? = null
 
     fun getCharacterDetails(url: String): LiveData<CharacterDetailsModel> {
         if (characterDetails.value == null) {
@@ -74,21 +69,19 @@ class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : Base
             .flatMapSingle { speciesUrl -> repo.getSpecieDetails(speciesUrl) }
             //For each specie result, get the homeworld / planet details
             .flatMapSingle { specie ->
-                specieName = specie.name
-                specieLanguage = specie.language
                 return@flatMapSingle repo
                     .getHomeworldDetails(specie.homeworldUrl)
                     //If homeworld api fails, return a default object
                     // to allow the stream to continue.
                     .onErrorReturn { HomeworldResponseModel() }
-            }
-            .observeOn(Schedulers.computation())
-            //Combine the specie details with homeworld details
-            .map { homeworldResponse ->
-                SpeciesDetailsModel(
-                    specieName, specieLanguage,
-                    homeworldResponse.name, homeworldResponse.population
-                )
+                    .observeOn(Schedulers.computation())
+                    //Combine the specie details with homeworld details
+                    .map { homeworldResponse ->
+                        SpeciesDetailsModel(
+                            specie.name, specie.language,
+                            homeworldResponse.name, homeworldResponse.population
+                        )
+                    }
             }
             //Wait for all species and homeworld results
             .toList()
