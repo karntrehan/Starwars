@@ -6,15 +6,25 @@ android {
     compileSdkVersion rootProject.compileSdk
     defaultConfig {
         minSdkVersion rootProject.minSdk
-        targetSdkVersion rootProject.targetSdk
-        versionCode 1
-        versionName "1.0"
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion androidDependencies.jetpackVersion
+    }
+
+    kotlinOptions {
+        jvmTarget = kotlinDep.jvmVersion
+    }
+
 }
 
 //For Parcelize support
