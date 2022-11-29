@@ -6,7 +6,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.karntrehan.starwars.architecture.BaseFragment
@@ -19,6 +22,8 @@ import com.karntrehan.starwars.extensions.visible
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.actionbar_toolbar.*
 import kotlinx.android.synthetic.main.fragment_search_character.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -120,11 +125,17 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
     }
 
     private fun startListeningToPaginationLoadingState() {
-        viewModel.paginationLoading.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                pbLoading.visible()
-            } else pbLoading.gone()
-        })
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.paginationLoading.collect {
+                    if (it) {
+                        pbLoading.visible()
+                    } else {
+                        pbLoading.gone()
+                    }
+                }
+            }
+        }
     }
 
     private fun initSearchBehaviour() {
@@ -137,20 +148,24 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
                 endlessScrollListener.resetState()
                 viewModel.searchCharacter(it)
             }
-            //.addTo(viewModel.disposable)
+        //.addTo(viewModel.disposable)
     }
 
     private fun startListeningToCharacters() {
-        viewModel.characters.observe(viewLifecycleOwner, Observer { characters ->
-            if (characters.isEmpty()) {
-                llNoData.visible()
-                rvCharacters.gone()
-            } else {
-                adapter.swapData(characters)
-                llNoData.gone()
-                rvCharacters.visible()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.characters.collect { characters ->
+                    if (characters.isEmpty()) {
+                        llNoData.visible()
+                        rvCharacters.gone()
+                    } else {
+                        adapter.swapData(characters)
+                        llNoData.gone()
+                        rvCharacters.visible()
+                    }
+                }
             }
-        })
+        }
     }
 
     private fun initEndlessScroll() = object : EndlessScrollListener(

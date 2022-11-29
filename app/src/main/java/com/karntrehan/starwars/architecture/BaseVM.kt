@@ -1,12 +1,12 @@
 package com.karntrehan.starwars.architecture
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.karntrehan.starwars.extensions.hide
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 abstract class BaseVM : ViewModel() {
@@ -14,18 +14,20 @@ abstract class BaseVM : ViewModel() {
     val disposable = CompositeDisposable()
 
     //Loading mutable livedata
-    protected val _loading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
+    protected val _loading by lazy { MutableStateFlow(false) }
+
     //Expose loading state as livedata instead of mutable
-    val loading: LiveData<Boolean> by lazy { _loading }
+    val loading by lazy { _loading.asStateFlow() }
 
     //Error mutable livedata
-    val _error: MutableLiveData<Throwable> by lazy { MutableLiveData<Throwable>() }
+    val _error by lazy { MutableStateFlow<Throwable?>(null) }
+
     //Expose error state as livedata instead of mutable
-    val error: LiveData<Throwable> by lazy { _error }
+    val error by lazy { _error.asStateFlow() }
 
     protected fun handleError(err: Throwable) {
         _loading.hide()
-        _error.postValue(err)
+        _error.value = err
     }
 
     override fun onCleared() {

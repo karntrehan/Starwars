@@ -9,23 +9,26 @@ import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
 import com.karntrehan.starwars.extensions.hide
 import com.karntrehan.starwars.extensions.show
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 
 class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM() {
 
-    private val _characters = MutableLiveData<List<CharacterSearchModel>>()
-    val characters: LiveData<List<CharacterSearchModel>> by lazy { _characters }
+    private val _characters = MutableStateFlow(emptyList<CharacterSearchModel>())
+    val characters by lazy { _characters.asStateFlow() }
 
     private var nextPageUrl: String? = ""
     private var processing: Boolean = false
 
-    private val _paginationLoading = MutableLiveData<Boolean>()
-    val paginationLoading: LiveData<Boolean> by lazy { _paginationLoading }
+    private val _paginationLoading = MutableStateFlow(false)
+    val paginationLoading by lazy { _paginationLoading.asStateFlow() }
 
     private val initialAPI = "people"
 
     fun initialLoad() {
-        if (_characters.value != null && !_characters.value.isNullOrEmpty()) return
+        if (_characters.value.isNotEmpty()) return
 
         _loading.show()
         getCharacters(url = initialAPI, resetItems = true)
@@ -57,7 +60,7 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
         nextPageUrl = response.next
         val results = response.results
         if (!results.isNullOrEmpty()) {
-            _characters.postValue(appendOrSetResults(resetItems, _characters.value, results))
+            _characters.value = appendOrSetResults(resetItems, _characters.value, results)
             _loading.hide()
             _paginationLoading.hide()
             processing = false
@@ -107,7 +110,7 @@ class CharacterSearchVM(private val repo: CharacterSearchContract.Repo) : BaseVM
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun setCharacter(characters: List<CharacterSearchModel>?) {
-        _characters.postValue(characters)
+        _characters.value = characters ?: emptyList()
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)

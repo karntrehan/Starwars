@@ -11,12 +11,16 @@ import com.karntrehan.starwars.extensions.divide
 import com.karntrehan.starwars.extensions.hide
 import com.karntrehan.starwars.extensions.show
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : BaseVM() {
 
-    private val characterDetails = MutableLiveData<CharacterDetailsModel>()
+    private val characterDetails = MutableStateFlow<CharacterDetailsModel?>(null)
 
-    fun getCharacterDetails(url: String): LiveData<CharacterDetailsModel> {
+    fun getCharacterDetails(url: String): StateFlow<CharacterDetailsModel?> {
         if (characterDetails.value == null) {
 
             _loading.show()
@@ -27,12 +31,12 @@ class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : Base
                 //Calculate the height in ft and inches
                 val coreDetails = remoteCoreDetails.copy(heightFtInches = cmToFeet(remoteCoreDetails.heightCentimeters))
                 //Send the core details to the UI
-                characterDetails.postValue(coreDetails)
+                characterDetails.value = coreDetails
 
                 loadAdditionalDetails(coreDetails)
             }
         }
-        return characterDetails
+        return characterDetails.asStateFlow()
     }
 
     private suspend fun loadAdditionalDetails(coreDetails: CharacterDetailsModel) {
@@ -43,14 +47,14 @@ class CharacterDetailsVM(private val repo: CharacterDetailsContract.Repo) : Base
                 //Update the core details with species details
                 combinedDetails = combinedDetails.copy(specieDetails = speciesAndHomeWorld(combinedDetails))
                 //Send the core + specie details to the UI
-                characterDetails.postValue(combinedDetails)
+                characterDetails.value = combinedDetails
             }
 
             launchSafely {
                 //Update core details with film details
                 combinedDetails = combinedDetails.copy(filmDetails = films(combinedDetails))
                 //Send core + film details to the UI
-                characterDetails.postValue(combinedDetails)
+                characterDetails.value = combinedDetails
                 _loading.hide()
             }
         }

@@ -2,7 +2,10 @@ package com.karntrehan.starwars.characters.details
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.karntrehan.starwars.architecture.BaseFragment
 import com.karntrehan.starwars.characters.CharacterDH
 import com.karntrehan.starwars.characters.R
@@ -15,6 +18,7 @@ import com.karntrehan.starwars.extensions.isValid
 import com.karntrehan.starwars.extensions.visible
 import kotlinx.android.synthetic.main.actionbar_toolbar.*
 import kotlinx.android.synthetic.main.fragment_character_details.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CharacterDetailsFragment : BaseFragment() {
@@ -72,20 +76,23 @@ class CharacterDetailsFragment : BaseFragment() {
         tvName.text = selectedCharacter?.name
         tvYOB.text = selectedCharacter?.birthYear
 
-        selectedCharacter?.url?.run {
+        selectedCharacter?.url?.let {
             //Trigger character details load
-            viewModel.getCharacterDetails(this)
-                .observe(viewLifecycleOwner, Observer { details ->
-                    handleCharacterDetails(details)
-                })
+            lifecycleScope.launch {
+                viewModel.getCharacterDetails(it)
+                    .collect { details ->
+                        handleCharacterDetails(details)
+                    }
+            }
         }
-
     }
 
     /**
      * Set the character details to the UI
      * */
-    private fun handleCharacterDetails(details: CharacterDetailsModel) {
+    private fun handleCharacterDetails(details: CharacterDetailsModel?) {
+
+        if (details == null) return
 
         tvName.text = details.name
 

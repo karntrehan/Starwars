@@ -50,6 +50,7 @@ dependencies {
     api archComponents.components
     kapt archComponents.componentsCompiler
     api archComponents.viewModelKtx
+    api archComponents.lifecycleKtx
 
     //Networking
     api networking.okhttp

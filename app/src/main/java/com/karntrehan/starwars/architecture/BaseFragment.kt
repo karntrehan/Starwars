@@ -12,10 +12,9 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 
 
@@ -60,12 +59,16 @@ abstract class BaseFragment : Fragment() {
     }
 
     private fun listenToLoadingState() {
-        baseVM.loading.observe(viewLifecycleOwner, Observer { loading ->
-            when (loading) {
-                true -> showLoading()
-                else -> hideLoading()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                baseVM.loading.collect { loading ->
+                    when (loading) {
+                        true -> showLoading()
+                        else -> hideLoading()
+                    }
+                }
             }
-        })
+        }
     }
 
     abstract fun hideLoading()
@@ -74,18 +77,22 @@ abstract class BaseFragment : Fragment() {
 
     @CallSuper
     private fun listenForExceptions() {
-        baseVM.error.observe(viewLifecycleOwner, Observer { error ->
 
-            if (error == null) return@Observer
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                baseVM.error.collect { error ->
+                    if (error == null) return@collect
 
-            //Make sure error is not propagated to all subsequent fragments
-            baseVM.errorHandled()
+                    //Make sure error is not propagated to all subsequent fragments
+                    baseVM.errorHandled()
 
-            Log.e("BaseFragment", error.localizedMessage, error)
-            when (error) {
-                is UnknownHostException -> showNetworkError()
+                    Log.e("BaseFragment", error.localizedMessage, error)
+                    when (error) {
+                        is UnknownHostException -> showNetworkError()
+                    }
+                }
             }
-        })
+        }
     }
 
     protected open fun showSnackBar(@StringRes reason: Int) {

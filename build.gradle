@@ -35,6 +35,7 @@ buildscript {
                 components        : "androidx.lifecycle:lifecycle-extensions:${archComponentsVersion}",
                 componentsCompiler: "androidx.lifecycle:lifecycle-compiler:${archComponentsVersion}",
                 viewModelKtx      : "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1",
+                lifecycleKtx      : "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1",
 
         ]
 

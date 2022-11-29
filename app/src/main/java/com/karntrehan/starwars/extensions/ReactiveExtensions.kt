@@ -1,7 +1,12 @@
 package com.karntrehan.starwars.extensions
 
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.flow.MutableStateFlow
 
-fun MutableLiveData<Boolean>.show() = this.postValue(true)
+fun MutableStateFlow<Boolean>.show() {
+    this.value = true
+}
 
-fun MutableLiveData<Boolean>.hide() = this.postValue(false)
+fun MutableStateFlow<Boolean>.hide() {
+    this.value = false
+}
