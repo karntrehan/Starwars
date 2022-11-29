@@ -1,12 +1,12 @@
 package com.karntrehan.starwars.characters.details
 
-
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.karntrehan.starwars.architecture.BaseFragment
 import com.karntrehan.starwars.characters.CharacterDH
 import com.karntrehan.starwars.characters.R
+import com.karntrehan.starwars.characters.databinding.FragmentCharacterDetailsBinding
 import com.karntrehan.starwars.characters.details.layouts.FilmDetailsView
 import com.karntrehan.starwars.characters.details.layouts.SpecieDetailsView
 import com.karntrehan.starwars.characters.details.models.CharacterDetailsModel
@@ -30,6 +30,8 @@ class CharacterDetailsFragment : BaseFragment() {
 
     private var selectedCharacter: CharacterSearchModel? = null
 
+    private lateinit var binding: FragmentCharacterDetailsBinding
+
     companion object {
         const val TAG = "CharacterDetailsFragment"
         const val CHARACTER = "character"
@@ -45,6 +47,7 @@ class CharacterDetailsFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = FragmentCharacterDetailsBinding.inflate(layoutInflater)
         CharacterDH.detailsComponent.inject(this)
         arguments?.let {
             if (it.containsKey(CHARACTER))
@@ -63,7 +66,7 @@ class CharacterDetailsFragment : BaseFragment() {
         setUpToolbar(toolbar, selectedCharacter?.name)
 
         //Disable swiperefreshlayout's swipe functionality
-        srlDetails.isEnabled = false
+        binding.srlDetails.isEnabled = false
 
         //Set the details passed from previous fragment
         tvName.text = selectedCharacter?.name
@@ -72,7 +75,7 @@ class CharacterDetailsFragment : BaseFragment() {
         selectedCharacter?.url?.run {
             //Trigger character details load
             viewModel.getCharacterDetails(this)
-                .observe(this@CharacterDetailsFragment, Observer { details ->
+                .observe(viewLifecycleOwner, Observer { details ->
                     handleCharacterDetails(details)
                 })
         }
@@ -125,10 +128,10 @@ class CharacterDetailsFragment : BaseFragment() {
     }
 
     override fun hideLoading() {
-        srlDetails.isRefreshing = false
+        binding.srlDetails.isRefreshing = false
     }
 
     override fun showLoading() {
-        srlDetails.isRefreshing = true
+        binding.srlDetails.isRefreshing = true
     }
 }

@@ -16,7 +16,6 @@ import com.karntrehan.starwars.characters.search.models.CharacterSearchModel
 import com.karntrehan.starwars.extensions.EndlessScrollListener
 import com.karntrehan.starwars.extensions.gone
 import com.karntrehan.starwars.extensions.visible
-import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.actionbar_toolbar.*
 import kotlinx.android.synthetic.main.fragment_search_character.*
@@ -54,7 +53,7 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
 
     override fun provideViewModelFactory() = characterSearchVMF
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         CharacterDH.searchComponent.inject(this)
         if (context is CharacterNavigator)
@@ -121,7 +120,7 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
     }
 
     private fun startListeningToPaginationLoadingState() {
-        viewModel.paginationLoading.observe(this, Observer {
+        viewModel.paginationLoading.observe(viewLifecycleOwner, Observer {
             if (it) {
                 pbLoading.visible()
             } else pbLoading.gone()
@@ -138,11 +137,11 @@ class CharacterSearchFragment : BaseFragment(), CharacterSearchAdapter.Interacti
                 endlessScrollListener.resetState()
                 viewModel.searchCharacter(it)
             }
-            .addTo(viewModel.disposable)
+            //.addTo(viewModel.disposable)
     }
 
     private fun startListeningToCharacters() {
-        viewModel.characters.observe(this, Observer { characters ->
+        viewModel.characters.observe(viewLifecycleOwner, Observer { characters ->
             if (characters.isEmpty()) {
                 llNoData.visible()
                 rvCharacters.gone()

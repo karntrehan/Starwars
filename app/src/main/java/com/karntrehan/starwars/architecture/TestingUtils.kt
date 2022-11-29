@@ -2,7 +2,8 @@ package com.karntrehan.starwars.architecture
 
 import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
-import okio.Okio
+import okio.buffer
+import okio.source
 import java.nio.charset.StandardCharsets
 
 @VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -18,7 +19,7 @@ object TestingUtils {
     fun getResponseFromJson(fileName: String): String {
         val inputStream = javaClass.classLoader?.getResourceAsStream("api-response/$fileName.json")
         return if (inputStream != null) {
-            val source = Okio.buffer(Okio.source(inputStream))
+            val source = inputStream.source().buffer()
             source.readString(StandardCharsets.UTF_8)
         } else ""
     }

@@ -6,5 +6,5 @@ import androidx.lifecycle.ViewModelProvider
 class CharacterSearchVMF(private val repo: CharacterSearchContract.Repo) :
     ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>) = CharacterSearchVM(repo) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = CharacterSearchVM(repo) as T
 }

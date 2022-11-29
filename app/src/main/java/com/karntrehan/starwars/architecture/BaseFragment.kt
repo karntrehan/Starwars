@@ -60,7 +60,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     private fun listenToLoadingState() {
-        baseVM.loading.observe(this, Observer { loading ->
+        baseVM.loading.observe(viewLifecycleOwner, Observer { loading ->
             when (loading) {
                 true -> showLoading()
                 else -> hideLoading()
@@ -74,7 +74,7 @@ abstract class BaseFragment : Fragment() {
 
     @CallSuper
     private fun listenForExceptions() {
-        baseVM.error.observe(this, Observer { error ->
+        baseVM.error.observe(viewLifecycleOwner, Observer { error ->
 
             if (error == null) return@Observer
 
@@ -127,8 +127,8 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             android.R.id.home -> parentActivity.onBackPressed()
         }
         return super.onOptionsItemSelected(item)

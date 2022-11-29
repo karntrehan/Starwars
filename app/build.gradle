@@ -15,12 +15,12 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String", "API_BASE", '"https://swapi.co/api/"'
+            buildConfigField "String", "API_BASE", '"https://swapi.dev/api/"'
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "API_BASE", '"https://swapi.co/api/"'
+            buildConfigField "String", "API_BASE", '"https://swapi.dev/api/"'
         }
     }
 
@@ -63,6 +63,7 @@ dependencies {
     //UI
     api ui.constraintLayout
     api ui.recyclerview
+    api ui.swipeRefreshLayout
     api ui.material
 
     //rx
